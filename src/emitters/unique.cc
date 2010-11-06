@@ -38,8 +38,70 @@
 
 #include "unique.h"
 
-inline UniqueEstimator::HashVal
-UniqueEstimator::PackUniqueHash(const uint8* mem) {
+namespace SZaru {
+
+
+class UniqueEstimatorImpl: public UniqueEstimator{
+public:
+  explicit UniqueEstimatorImpl(int param)
+    : heap_(),
+      exists_(10),   // STL defaults to 100 buckets, which is a lot.
+      maxElems_(param),
+      isSorted_(false) {
+  }  
+
+  void AddElem(const std::string& elm);
+  int64 Estimate() const;
+
+  // ToDo: move to super class
+  // Get the number of elements added to this entry in the table.
+  uint64 TotElems() const { return tot_elems_; }
+  
+private:
+  // type of hash values kept.
+  typedef uint64 HashVal;
+  
+  static HashVal PackUniqueHash(const uint8* mem);
+  static void UnpackUniqueHash(HashVal hash, uint8* mem);
+
+  int AddHash(HashVal hash);
+
+  void FixHeapUp(int h);
+  void FixHeapDown(int h, int nheap);
+  
+  template <typename T>
+  struct identity {
+    inline const T& operator()(const T& t) const { return t; }
+  };
+
+  std::vector<HashVal> heap_;
+  
+  // This also keeps only smallest "maxElems_" elements.
+  typedef hash_set<HashVal, identity<HashVal> > Exists;
+  Exists exists_;
+  
+  // Size of the hash we keep.
+  static const int kHashSize = 24;
+
+  // Max elements we keep track of.
+  // This needs to be a constant to maintain estimate accuracy.
+  const uint32 maxElems_;
+
+  // Is heap_ actually a sorted array, biggest to smallest?
+  bool isSorted_;
+
+  // ToDo: move to super class
+  // Total elements added to this entry in the sum table.
+  uint64 tot_elems_;
+};
+
+UniqueEstimator *
+UniqueEstimator::Create(int maxElems) {
+  return new UniqueEstimatorImpl(maxElems);
+}
+
+inline UniqueEstimatorImpl::HashVal
+UniqueEstimatorImpl::PackUniqueHash(const uint8* mem) {
   uint32 hhi = (mem[0] << 24) | (mem[1] << 16) | (mem[2] << 8) | mem[3];
   uint32 hlo = (mem[4] << 24) | (mem[5] << 16) | (mem[6] << 8) | mem[7];
   uint64 h = hhi;
@@ -48,7 +110,7 @@ UniqueEstimator::PackUniqueHash(const uint8* mem) {
 
 
 inline void
-UniqueEstimator::UnpackUniqueHash(HashVal hash, uint8* mem) {
+UniqueEstimatorImpl::UnpackUniqueHash(HashVal hash, uint8* mem) {
   uint32 hhi = hash >> 32;
   uint32 hlo = hash;
   mem[0] = hhi >> 24;
@@ -61,15 +123,15 @@ UniqueEstimator::UnpackUniqueHash(HashVal hash, uint8* mem) {
   mem[7] = hlo;
 }
 
-int UniqueEstimator::AddElem(const std::string& elem)
+void UniqueEstimatorImpl::AddElem(const std::string& elem)
 {
   uint8 digest[MD5_DIGEST_LENGTH];
   
   MD5Digest(elem.data(), elem.size(), &digest);
-  return AddHash(PackUniqueHash(digest));
+  AddHash(PackUniqueHash(digest));
 }
 
-int UniqueEstimator::AddHash(HashVal hash) {
+int UniqueEstimatorImpl::AddHash(HashVal hash) {
   ++tot_elems_;
   if (maxElems_ <= 0)
     return 0;
@@ -100,7 +162,7 @@ int UniqueEstimator::AddHash(HashVal hash) {
 }
 
 // Move an element up the heap to its proper position.
-void UniqueEstimator::FixHeapUp(int h) {
+void UniqueEstimatorImpl::FixHeapUp(int h) {
   if (h >= 0 && (uint32)h < heap_.size()) {
     HashVal e = heap_[h];
 
@@ -119,7 +181,7 @@ void UniqueEstimator::FixHeapUp(int h) {
 }
 
 // Move an element down the heap to its proper position.
-void UniqueEstimator::FixHeapDown(int h, int nheap) {
+void UniqueEstimatorImpl::FixHeapDown(int h, int nheap) {
   if (h >= 0 && h < nheap) {
     HashVal e = heap_[h];
     for (;;) {
@@ -148,7 +210,7 @@ void UniqueEstimator::FixHeapDown(int h, int nheap) {
 
 // Estimate the number of unique entries.
 // estimate = (maxelems << bits-in-hash) / biggest-small-elem
-int64 UniqueEstimator::Estimate() const {
+int64 UniqueEstimatorImpl::Estimate() const {
   if (maxElems_ <= 0) {
     return 0;
   }
@@ -200,4 +262,6 @@ int64 UniqueEstimator::Estimate() const {
     return TotElems();
   }
   return r;
+}
+
 }
