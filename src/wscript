@@ -1,0 +1,7 @@
+def build(bld):
+  bld(source = 'emitters/unique.cc public/hashutils.cc',
+      features ='cxx cxxshlib',
+      name     = 'szaru',
+      target   = 'szaru',
+      lib = 'ssl',
+      includes     = '.')
