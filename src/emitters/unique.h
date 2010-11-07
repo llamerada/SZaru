@@ -25,17 +25,16 @@ protected:
   UniqueEstimator() {}
   
 public:
-  virtual ~UniqueEstimator();
+  static UniqueEstimator* Create(int maxElems);
+  virtual ~UniqueEstimator() {};
   
   // Add a new element to this entry.
-  virtual void AddElem(const std::string& elm);
-  virtual int64_t Estimate() const;
+  virtual void AddElem(const std::string& elm) = 0;
+  virtual int64_t Estimate() const = 0;
 
   // ToDo: move to super class
   // Get the number of elements added to this entry in the table.
-  virtual uint64_t TotElems() const;
-
-  static UniqueEstimator* Create(int maxElems);
+  virtual uint64_t TotElems() const = 0;
 };
 
 }

@@ -12,4 +12,4 @@ def configure(ctx):
   ctx.env.CXXFLAGS += ['-O2', '-Wall', '-g']
 
 def build(bld):
-  bld.recurse('src')
+  bld.recurse('src test')
