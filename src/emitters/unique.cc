@@ -75,6 +75,10 @@ private:
     inline const T& operator()(const T& t) const { return t; }
   };
 
+  // ToDo: move to super class
+  // Total elements added to this entry in the sum table.
+  uint64 tot_elems_;
+
   std::vector<HashVal> heap_;
   
   // This also keeps only smallest "maxElems_" elements.
@@ -90,10 +94,6 @@ private:
 
   // Is heap_ actually a sorted array, biggest to smallest?
   bool isSorted_;
-
-  // ToDo: move to super class
-  // Total elements added to this entry in the sum table.
-  uint64 tot_elems_;
 };
 
 UniqueEstimator *
