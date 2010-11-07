@@ -21,9 +21,13 @@
 namespace SZaru{
 
 class UniqueEstimator {
+protected:
+  UniqueEstimator() {}
+  
 public:
   virtual ~UniqueEstimator();
   
+  // Add a new element to this entry.
   virtual void AddElem(const std::string& elm);
   virtual int64_t Estimate() const;
 

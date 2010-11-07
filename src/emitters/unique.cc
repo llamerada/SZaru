@@ -44,7 +44,8 @@ namespace SZaru {
 class UniqueEstimatorImpl: public UniqueEstimator{
 public:
   explicit UniqueEstimatorImpl(int param)
-    : heap_(),
+    : tot_elems_(0),
+      heap_(),
       exists_(10),   // STL defaults to 100 buckets, which is a lot.
       maxElems_(param),
       isSorted_(false) {
