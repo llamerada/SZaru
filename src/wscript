@@ -1,5 +1,9 @@
 def build(bld):
-  bld(source = 'emitters/unique.cc public/hashutils.cc',
+  bld(source = """
+  emitters/szlunique.cc
+  emitters/szltopheap.cc
+  public/hashutils.cc
+  """,
       features ='cxx cxxshlib',
       name     = 'szaru',
       target   = 'szaru',
