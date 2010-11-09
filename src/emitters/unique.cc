@@ -52,6 +52,9 @@ public:
   }  
 
   void AddElem(const std::string& elm);
+
+  void AddElem(const char *data, size_t size);
+  
   int64 Estimate() const;
 
   // ToDo: move to super class
@@ -129,6 +132,14 @@ void UniqueEstimatorImpl::AddElem(const std::string& elem)
   uint8 digest[MD5_DIGEST_LENGTH];
   
   MD5Digest(elem.data(), elem.size(), &digest);
+  AddHash(PackUniqueHash(digest));
+}
+
+void UniqueEstimatorImpl::AddElem(const char *data, size_t size)
+{
+  uint8 digest[MD5_DIGEST_LENGTH];
+  
+  MD5Digest(data, size, &digest);
   AddHash(PackUniqueHash(digest));
 }
 

@@ -20,7 +20,7 @@
 #include <string>
 
 namespace SZaru{
-
+  
 class UniqueEstimator {
 public:
   // factory
@@ -30,6 +30,9 @@ public:
   
   // Add a new element to this entry.
   virtual void AddElem(const std::string& elm) = 0;
+
+  // Add a new element to this entry.
+  virtual void AddElem(const char *data, size_t size_t) = 0;
 
   // Estimate the number of unique entries.
   // estimate = (maxelems << bits-in-hash) / biggest-small-elem
