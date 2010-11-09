@@ -1,4 +1,5 @@
 // Copyright 2010 Google Inc.
+// Copyright 2010 Yuji Kaneda
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,6 +26,7 @@
 
 // Definitions that might have to be changed when porting this code.
 
+// Comment-outed by Yuji Kaneda.
 // #if SZL_BYTE_ORDER == 0
 // #error Byte order is unknown or ambiguous
 // #endif

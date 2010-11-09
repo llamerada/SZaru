@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // ------------------------------------------------------------------------
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,9 +21,12 @@
 #include <string>
 #include <utility>
 
+#include "public/hash_map.h"
+
 #include "public/porting.h"
 #include "public/logging.h"
 #include "public/hashutils.h"
+
 
 //============================================================================
 // MD5 hash
@@ -34,6 +38,7 @@ void MD5Digest(const void* data, size_t length,
   MD5_Update(&md, data, length);
   MD5_Final(*digest, &md);
 }
+
 
 //============================================================================
 // Hash implementation
