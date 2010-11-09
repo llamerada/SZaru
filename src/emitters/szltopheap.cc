@@ -1,4 +1,5 @@
 // Copyright 2010 Google Inc.
+// Copyright 2010 Yuji Kaneda
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,6 +33,12 @@
 #include "emitters/szltopheap.h"
 
 namespace SZaru {
+
+TopHeap *
+TopHeap::Create(int maxElems) {
+  return new SzlTopHeap(maxElems);
+}
+
 // Helper classes for making hashes work.
 struct SzlTopHeapEq {
   bool operator()(const string* s1, const string* s2) const {
@@ -147,7 +154,7 @@ void SzlTopHeap::FixHeapUp(int h) {
     Elem* pe = (*heap_)[parent];
     assert(pe != NULL);
     // original: "if (!less_->Cmp(w, pe->weight))"
-    if (w <= pe->weight)
+    if (w >= pe->weight)
        break;
     (*heap_)[h] = pe;
     pe->heap = h;
@@ -174,14 +181,14 @@ void SzlTopHeap::FixHeapDown(int h, int nheap) {
       Elem* ke1 = (*heap_)[kid + 1];
       double kw1 = ke1->weight;
       //if (less_->Cmp(*kw1, *kw)) {
-      if (kw1 > kw) {
+      if (kw1 < kw) {
         ke = ke1;
         kw = kw1;
         ++kid;
       }
     }
     // if (less_->Cmp(w, *kw))
-    if (w > kw)
+    if (w < kw)
       break;
     (*heap_)[h] = ke;
     ke->heap = h;
@@ -201,7 +208,7 @@ void SzlTopHeap::FixHeap(int h) {
 
   // Fix up the heap if smaller than parent
   // original: if (h != 0 && less_->Cmp((*heap_)[h]->weight, (*heap_)[(h - 1) >> 1]->weight))
-  if (h != 0 && ((*heap_)[h]->weight > (*heap_)[(h - 1) >> 1]->weight))
+  if (h != 0 && ((*heap_)[h]->weight < (*heap_)[(h - 1) >> 1]->weight))
     FixHeapUp(h);
   else
     FixHeapDown(h, heap_->size());
@@ -214,7 +221,7 @@ bool SzlTopHeap::IsHeap() {
     if ((*heap_)[i] == NULL
 	|| (*heap_)[parent] == NULL
 	// || original: less_->Cmp((*heap_)[i]->weight, (*heap_)[parent]->weight)
-	|| (*heap_)[i]->weight > (*heap_)[parent]->weight
+	|| (*heap_)[i]->weight < (*heap_)[parent]->weight
 	|| (*heap_)[i]->heap != i)
       return false;
   }

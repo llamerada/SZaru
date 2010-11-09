@@ -2,6 +2,7 @@ def build(bld):
   bld(source = """
   emitters/szlunique.cc
   emitters/szltopheap.cc
+  emitters/szlsketch.cc
   public/hashutils.cc
   """,
       features ='cxx cxxshlib',

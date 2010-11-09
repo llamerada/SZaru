@@ -54,7 +54,7 @@ public:
 
   void AddElem(const std::string& elm);
 
-  void AddElem(const char *data, size_t size);
+  void AddElemInCIF(const char *data, size_t size);
   
   int64 Estimate() const;
 
@@ -136,7 +136,7 @@ void UniqueEstimatorImpl::AddElem(const std::string& elem)
   AddHash(PackUniqueHash(digest));
 }
 
-void UniqueEstimatorImpl::AddElem(const char *data, size_t size)
+void UniqueEstimatorImpl::AddElemInCIF(const char *data, size_t size)
 {
   uint8 digest[MD5_DIGEST_LENGTH];
   
