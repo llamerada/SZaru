@@ -22,20 +22,25 @@
 namespace SZaru{
 
 class UniqueEstimator {
-protected:
-  UniqueEstimator() {}
-  
 public:
+  // factory
   static UniqueEstimator* Create(int maxElems);
+  
   virtual ~UniqueEstimator() {};
   
   // Add a new element to this entry.
   virtual void AddElem(const std::string& elm) = 0;
+
+  // Estimate the number of unique entries.
+  // estimate = (maxelems << bits-in-hash) / biggest-small-elem
   virtual int64_t Estimate() const = 0;
 
   // ToDo: move to super class
   // Get the number of elements added to this entry in the table.
   virtual uint64_t TotElems() const = 0;
+
+protected:
+  UniqueEstimator() {}
 };
 
 }
