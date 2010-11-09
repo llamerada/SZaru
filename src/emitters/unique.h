@@ -17,6 +17,7 @@
 #define _SZARU_UNIQUE_
 
 #include <stdint.h>
+#include <string>
 
 namespace SZaru{
 
