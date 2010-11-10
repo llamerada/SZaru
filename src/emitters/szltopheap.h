@@ -18,7 +18,7 @@
 #include <vector>
 
 #include "public/hash_map.h"
-#include "emitters/topheap.h"
+// #include "emitters/topheap.h"
 
 // Comment by Yuji Kaneda
 // I replcaed SzlValue to 'double' and SzlValueComp to less of 'double' for simplicity
@@ -34,13 +34,26 @@ struct SzlTopHeapHash;
 // with the ability to look for those elements and adjust their weights.
 // Create with less == SzlValueLess for keeping track of the biggest,
 // less == SzlValueGreater for keeping track of the smallest.
-class SzlTopHeap : public TopHeap {
+template <typename Value>
+class SzlTopHeap {
  public:
   // Create a SzlTopHeap.
   // maxElems is the number of element to keep track ok.
   SzlTopHeap(uint32_t maxElems);
 
   ~SzlTopHeap();
+
+  // Combination of a value & weight.
+  struct Elem {
+    std::string value;
+    Value weight;
+
+   private:
+    friend class SzlTopHeap;
+    int heap;           // position in heap for fixups on reweighting
+  };
+
+  typedef Elem ElemType;
 
   // Number of candidate biggest elements current held.
   uint32_t nElems() const { return heap_->size(); }
@@ -56,17 +69,17 @@ class SzlTopHeap : public TopHeap {
   // Find a candidate by value.  returns NULL if not present.
   // REQUIRES: created with hasFind.
   Elem* Find(const string& s);
-
+  
   // Add a new element to the heap.
   // REQUIRES: heap not full.
-  void AddNewElem(const string& value, const double w);
+  void AddNewElem(const string& value, const Value w);
 
   // Add w to the weight of an existing candidate.
-  void AddToWeight(const double w, Elem* e);
+  void AddToWeight(const Value w, Elem* e);
 
   // Replace the smallest candidate.
   // Returns the amount of extra memory allocated (or deallocated).
-  void ReplaceSmallest(const string& value, const double w);
+  void ReplaceSmallest(const string& value, const Value w);
 
   // Return the candidate with the smallest value.
   Elem* Smallest() const { return (*heap_)[0]; }
@@ -112,3 +125,5 @@ class SzlTopHeap : public TopHeap {
   uint32_t maxElems_;
 };
 }
+
+#include "emitters/szltopheap.cc"

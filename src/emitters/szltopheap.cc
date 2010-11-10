@@ -21,7 +21,6 @@
 
 #include "public/porting.h"
 #include "public/hash_map.h"
-#include "public/logging.h"
 #include "public/hashutils.h"
 
 // #include "public/szltype.h"
@@ -30,14 +29,14 @@
 // #include "public/szldecoder.h"
 // #include "public/szltabentry.h"
 
-#include "emitters/szltopheap.h"
+// #include "emitters/szltopheap.h"
 
 namespace SZaru {
 
-TopHeap *
-TopHeap::Create(int maxElems) {
-  return new SzlTopHeap(maxElems);
-}
+  // TopHeap *
+  // TopHeap::Create(int maxElems) {
+  //  return new SzlTopHeap(maxElems);
+  // }
 
 // Helper classes for making hashes work.
 struct SzlTopHeapEq {
@@ -52,7 +51,8 @@ struct SzlTopHeapHash {
   }
 };
 
-SzlTopHeap::SzlTopHeap(uint32_t  maxElems)
+template<typename Value>
+SzlTopHeap<Value>::SzlTopHeap(uint32_t  maxElems)
   : heap_(new vector<Elem*>),
     hash_(new TopHash(5)),    // Pre-allocate room for a few buckets.
                               // By default, hash_map allocates 100 entries,
@@ -60,13 +60,15 @@ SzlTopHeap::SzlTopHeap(uint32_t  maxElems)
     maxElems_(maxElems) {
 }
 
-SzlTopHeap::~SzlTopHeap() {
+template<typename Value>
+SzlTopHeap<Value>::~SzlTopHeap() {
   Clear();
   delete hash_;
   delete heap_;
 }
 
-void SzlTopHeap::Clear() {
+template<typename Value>
+void SzlTopHeap<Value>::Clear() {
   for (size_t i = 0; i < heap_->size(); i++) {
     delete (*heap_)[i];
   }
@@ -74,14 +76,17 @@ void SzlTopHeap::Clear() {
   hash_->clear();
 }
 
-SzlTopHeap::Elem* SzlTopHeap::Find(const string& s) {
-  TopHash::iterator it = hash_->find(&s);
+template<typename Value>
+typename SzlTopHeap<Value>::ElemType*
+SzlTopHeap<Value>::Find(const string& s) {
+  typename TopHash::iterator it = hash_->find(&s);
   if (it == hash_->end())
     return NULL;
   return it->second;
 }
 
-void SzlTopHeap::AddNewElem(const string& value, const double w) {
+template<typename Value>
+void SzlTopHeap<Value>::AddNewElem(const string& value, Value w) {
   // CHECK(heap_->size() < maxElems_);
   Elem* e = new Elem;
   e->value = value;
@@ -95,7 +100,8 @@ void SzlTopHeap::AddNewElem(const string& value, const double w) {
   bucks = MaxInt(0, bucks);
  }
 
-void SzlTopHeap::ReplaceSmallest(const string& value, const double w) {
+template<typename Value>
+void SzlTopHeap<Value>::ReplaceSmallest(const string& value, Value w) {
   // CHECK(heap_->size() > 0);
   Elem* smallest = (*heap_)[0];
   hash_->erase(&smallest->value);
@@ -106,14 +112,16 @@ void SzlTopHeap::ReplaceSmallest(const string& value, const double w) {
 }
 
 // Add to the weight of e.
-void SzlTopHeap::AddToWeight(const double w, Elem* e) {
+template<typename Value>
+void SzlTopHeap<Value>::AddToWeight(Value w, Elem* e) {
   assert(e != NULL);
   e->weight += w;
   FixHeap(e->heap);
 }
 
 // Sort, destroying heap.
-void SzlTopHeap::Sort() {
+template<typename Value>
+void SzlTopHeap<Value>::Sort() {
   int ne = heap_->size();
   if (!ne)
     return;
@@ -127,7 +135,8 @@ void SzlTopHeap::Sort() {
 }
 
 // Restore to a heap after sorting; simply reverse the sort.
-void SzlTopHeap::ReHeap() {
+template<typename Value>
+void SzlTopHeap<Value>::ReHeap() {
   int ne = heap_->size();
   int nswap = ne >> 1;
   for (int i = 0; i < nswap; i++) {
@@ -144,10 +153,11 @@ void SzlTopHeap::ReHeap() {
 }
 
 // Move an element up the heap to its proper position.
-void SzlTopHeap::FixHeapUp(int h) {
-  assert(h >= 0 && h <  heap_->size());
+template<typename Value>
+void SzlTopHeap<Value>::FixHeapUp(int h) {
+  assert(h >= 0 && static_cast<size_t>(h) <  heap_->size());
   Elem* e = (*heap_)[h];
-  const double w = e->weight;
+  Value w = e->weight;
 
   while (h != 0) {
     int parent = (h - 1) >> 1;
@@ -166,10 +176,11 @@ void SzlTopHeap::FixHeapUp(int h) {
 }
 
 // Move an element down the heap to its proper position.
-void SzlTopHeap::FixHeapDown(int h, int nheap) {
+template<typename Value>
+void SzlTopHeap<Value>::FixHeapDown(int h, int nheap) {
   assert(h >= 0 && h < nheap);
   Elem* e = (*heap_)[h];
-  const double w = e->weight;
+  Value w = e->weight;
 
   for (;;) {
     int kid = (h << 1) + 1;
@@ -203,8 +214,9 @@ void SzlTopHeap::FixHeapDown(int h, int nheap) {
 // proper position, which may be either up or down.
 // It is the only element whose weight has changed
 // since the heap was last consistent.
-void SzlTopHeap::FixHeap(int h) {
-  assert(h >= 0 && h < heap_->size());
+template<typename Value>
+void SzlTopHeap<Value>::FixHeap(int h) {
+  assert(h >= 0 && static_cast<size_t>(h) < heap_->size());
 
   // Fix up the heap if smaller than parent
   // original: if (h != 0 && less_->Cmp((*heap_)[h]->weight, (*heap_)[(h - 1) >> 1]->weight))
@@ -215,14 +227,15 @@ void SzlTopHeap::FixHeap(int h) {
 }
 
 // Check that the heap really is a heap.
-bool SzlTopHeap::IsHeap() {
-  for (int i = 1; i < heap_->size(); ++i) {
+template<typename Value>
+bool SzlTopHeap<Value>::IsHeap() {
+  for (size_t i = 1; i < heap_->size(); ++i) {
     int parent = (i - 1) >> 1;
     if ((*heap_)[i] == NULL
 	|| (*heap_)[parent] == NULL
 	// || original: less_->Cmp((*heap_)[i]->weight, (*heap_)[parent]->weight)
 	|| (*heap_)[i]->weight < (*heap_)[parent]->weight
-	|| (*heap_)[i]->heap != i)
+	|| (*heap_)[i]->heap != static_cast<int>(i))
       return false;
   }
   return true;

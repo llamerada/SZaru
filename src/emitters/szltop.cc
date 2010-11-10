@@ -110,7 +110,7 @@ private:
   // Structure for keeping track of the current top elements.
   // TODO: Add an iterator for sorted output to improve
   // Flush performance.
-  SzlTopHeap tops_;
+  SzlTopHeap<double> tops_;
   
   // Number and the size of tables in the sketch.
   int sketchTabs_;
@@ -151,7 +151,7 @@ void TopEstimatorImpl::AddWeightedElem(const string& elem,
     return;
 
   // Is the element in list of candidate tops?
-  SzlTopHeap::Elem* e = tops_.Find(elem);
+  SzlTopHeap<double>::Elem* e = tops_.Find(elem);
   if (e != NULL)
     return tops_.AddToWeight(w, e);  // Just adjust weight in candidate list.
 
@@ -177,7 +177,7 @@ void TopEstimatorImpl::AddWeightedElem(const string& elem,
   // weight_ops().Add(sw, &tw);
   tw = w + sw;
   // Is it still smaller than the smallest candidate?
-  SzlTopHeap::Elem* worst = tops_.Smallest();
+  SzlTopHeap<double>::Elem* worst = tops_.Smallest();
   // if (weight_ops().Less(tw, worst->weight)) {
   if (tw < worst->weight) {
     // Yup.  Just adjust the weight in the sketch.
@@ -197,7 +197,7 @@ void TopEstimatorImpl::AddWeightedElem(const string& elem,
 void TopEstimatorImpl::Estimate(std::vector<Elem>& topElems) {
   topElems.clear();
   int nTopElems;
-  if (param_ < tops_.nElems()) {
+  if (static_cast<size_t>(param_) < tops_.nElems()) {
     nTopElems = param_;
   } else {
     // when the number of added elems is too small
@@ -208,7 +208,7 @@ void TopEstimatorImpl::Estimate(std::vector<Elem>& topElems) {
   // Note: After sorting, heap is destroyed, so can't call AddElem.
   tops_.Sort();
   for (int i = 0; i < nTopElems; ++i) {
-    const SzlTopHeap::Elem* e = tops_.Element(i);
+    const SzlTopHeap<double>::Elem* e = tops_.Element(i);
     Elem outputElem;
     outputElem.value = e->value;
     outputElem.weight = e->weight;
