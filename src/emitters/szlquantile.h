@@ -40,7 +40,7 @@ namespace SZaru {
       Clear();
     }
     virtual ~QuantileEstimator() { Clear(); }
-    virtual int AddElem(const std::string& elem);
+    virtual void AddElem(const std::string& elem);
     // virtual void Flush(string* output);
     // virtual void FlushForDisplay(vector<string>* output);
     // virtual SzlTabEntry::MergeStatus Merge(const string& val);
@@ -56,6 +56,8 @@ namespace SZaru {
     virtual int64_t TotElems() const  { return tot_elems_; }
     virtual int TupleCount()  { return buffer_.size(); }
 
+    virtual void Estimate();
+
     // const SzlOps& element_ops() const  { return element_ops_; }
 
    private:
@@ -68,10 +70,10 @@ namespace SZaru {
     static const int64_t MAX_TOT_ELEMS = 1024LL * 1024LL * 1024LL * 1024LL;
 
     int64_t ComputeK();
-    int EnsureBuffer(const int level);
-    int Collapse(std::vector<std::string> *const a, std::vector<std::string> *const b,
+    void EnsureBuffer(const int level);
+    void Collapse(std::vector<std::string> *const a, std::vector<std::string> *const b,
                  std::vector<std::string> *const output);
-    int RecursiveCollapse(std::vector<std::string> *buf, const int level);
+    void RecursiveCollapse(std::vector<std::string> *buf, const int level);
     // bool EncodingToString(SzlDecoder *const dec, string *const output);
 
     uint64_t tot_elems_;

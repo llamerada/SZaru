@@ -125,20 +125,20 @@ int64 QuantileEstimator::ComputeK() {
 
 // If buffer_[level] already exists, do nothing.
 // Else create a new buffer_[level] that is empty.
-int QuantileEstimator::EnsureBuffer(const int level) {
-  int extra_memory = 0;
+void QuantileEstimator::EnsureBuffer(const int level) {
+  // int extra_memory = 0;
   if (buffer_.size() < static_cast<size_t>(level) + 1) {
-    size_t old_capacity = buffer_.capacity();
+    // size_t old_capacity = buffer_.capacity();
     buffer_.resize(level + 1, NULL);
-    extra_memory +=
-        (buffer_.capacity() - old_capacity) * sizeof(vector<string>*);
+    // extra_memory +=
+    // (buffer_.capacity() - old_capacity) * sizeof(vector<string>*);
   }
   if (buffer_[level] == NULL) {
     // VLOG(2) << StringPrintf("Creating buffer_[%d] ...", level);
     buffer_[level] = new vector<string>();
-    extra_memory += sizeof(*(buffer_[level]));
+    // extra_memory += sizeof(*(buffer_[level]));
   }
-  return extra_memory;
+  // return extra_memory;
 }
 
 // Estimate the amount of memory being used.
@@ -172,14 +172,14 @@ int QuantileEstimator::EnsureBuffer(const int level) {
 // The return value is the change is memory requirements. What causes
 // increase/decrease in memory?  (i) "output" is populated and (ii) just before
 // returning, both "a" and "b" are cleared.
-int QuantileEstimator::Collapse(vector<string> *const a,
+void QuantileEstimator::Collapse(vector<string> *const a,
                                             vector<string> *const b,
                                             vector<string> *const output) {
   // CHECK_EQ(a->size(), k_);
   // CHECK_EQ(b->size(), k_);
-  // xCHECK_EQ(output->size(), 0);
+  // CHECK_EQ(output->size(), 0);
 
-  int memory_delta = 0;
+  // int memory_delta = 0;
   int index_a = 0;
   int index_b = 0;
   int count = 0;
@@ -195,13 +195,13 @@ int QuantileEstimator::Collapse(vector<string> *const a,
     if ((count++ % 2) == 0) {  // remember "smallest"
       output->push_back(*smaller);
     } else {  // forget "smallest"
-      memory_delta -= smaller->size();
+      // memory_delta -= smaller->size();
     }
   }
 
   // Account for the memory taken by output and a & b.
-  memory_delta += (output->capacity() - a->capacity() - b->capacity())
-      * sizeof(string);
+  // memory_delta += (output->capacity() - a->capacity() - b->capacity())
+  // * sizeof(string);
 
   // Make sure we completely deallocate the memory taken by a & b.
   {
@@ -213,7 +213,7 @@ int QuantileEstimator::Collapse(vector<string> *const a,
     b->swap(tmp);
   }
 
-  return memory_delta;
+  // return memory_delta;
 }
 
 // Algorithm for RecursiveCollapse():
@@ -226,7 +226,7 @@ int QuantileEstimator::Collapse(vector<string> *const a,
 //      "buffer_[level + 1]"  <-- "merged"
 //
 // The return value is the difference in memory usage.
-int QuantileEstimator::RecursiveCollapse(vector<string> *buf,
+void QuantileEstimator::RecursiveCollapse(vector<string> *buf,
                                                      const int level) {
   // VLOG(2) << StringPrintf("RecursiveCollapse() invoked with level = %d", level);
 
@@ -236,7 +236,8 @@ int QuantileEstimator::RecursiveCollapse(vector<string> *buf,
   // CHECK(buffer_[level] != NULL);
   // CHECK_EQ(buffer_[level]->size(), k_);
 
-  int memory_delta = EnsureBuffer(level + 1);
+  // int memory_delta = EnsureBuffer(level + 1);
+  EnsureBuffer(level + 1);
 
   vector<string> *merged;
   if (buffer_[level + 1]->size() == 0) {  // buffer_[level + 1] is empty
@@ -250,13 +251,15 @@ int QuantileEstimator::RecursiveCollapse(vector<string> *buf,
   // We account for the memory taken by merged even if it's a
   // temporary vector, since in this case it will be passed to
   // RecursiveCollapse, which will substract the memory it takes.
-  memory_delta += Collapse(buffer_[level], buf, merged);
+  // memory_delta += Collapse(buffer_[level], buf, merged);
+  Collapse(buffer_[level], buf, merged);
   if (buffer_[level + 1] == merged) {
-    return memory_delta;
+    // return memory_delta;
   }
-  memory_delta += RecursiveCollapse(merged, level + 1);
-  delete merged;
-  return memory_delta;
+  //memory_delta += RecursiveCollapse(merged, level + 1);
+  RecursiveCollapse(merged, level + 1);
+  // delete merged;
+  // return memory_delta;
 }
 
 // Goal: Add a new element ("elem" is a SzlEncoded value).
@@ -272,17 +275,17 @@ int QuantileEstimator::RecursiveCollapse(vector<string> *buf,
 //       RecursiveCollapse(buffer_[0], buffer_[1])
 //       Insert into buffer_[0]
 //   }
-int QuantileEstimator::AddElem(const string& elem) {
-  int memory_delta = 0;
+void QuantileEstimator::AddElem(const string& elem) {
+  // int memory_delta = 0;
 
   // Update min_ and max_.
   if ((tot_elems_ == 0) || (elem < min_)) {
-    memory_delta += elem.size() - min_.size();
+    // memory_delta += elem.size() - min_.size();
     min_ = elem;
     // VLOG(3) << "AddElem(" << elem << "): min_ updated to " << min_;
   }
   if ((tot_elems_ == 0) || (max_ < elem)) {
-    memory_delta += elem.size() - max_.size();
+    // memory_delta += elem.size() - max_.size();
     max_ = elem;
     // VLOG(3) << "AddElem(" << elem << "): max_ updated to " << max_;
   }
@@ -304,24 +307,27 @@ int QuantileEstimator::AddElem(const string& elem) {
     sort(buffer_[1]->begin(), buffer_[1]->end());
     const int level = 1;
     // RecursiveCollapse will start with Collapse(buffer_[0], buffer_[level]).
-    memory_delta += RecursiveCollapse(buffer_[0], level);
+    // memory_delta += RecursiveCollapse(buffer_[0], level);
+    RecursiveCollapse(buffer_[0], level);
   }
 
   // At this point, we are sure that either buffer_[0] or buffer_[1] can
   // accommodate "elem".
-  memory_delta += EnsureBuffer(0);
-  memory_delta += EnsureBuffer(1);
+  //memory_delta += EnsureBuffer(0);
+  //memory_delta += EnsureBuffer(1);
+  EnsureBuffer(0);
+  EnsureBuffer(1);
   // CHECK((buffer_[0]->size(), k_) || (buffer_[1]->size(), k_));
   int index = (buffer_[0]->size() < k_) ? 0 : 1;
   // VLOG(3) << "AddElem(" << elem << "): Inserting into buffer_[" << index << "]";
-  int old_capacity = buffer_[index]->capacity();
+  // int old_capacity = buffer_[index]->capacity();
   buffer_[index]->push_back(elem);
-  memory_delta += elem.size()
-      + (buffer_[index]->capacity() - old_capacity) * sizeof(string);
+  // memory_delta += elem.size()
+  // + (buffer_[index]->capacity() - old_capacity) * sizeof(string);
   ++tot_elems_;
   // VLOG(3) << StringPrintf("AddElem(%s): returning with tot_elems_ = %lld",
   // elem.c_str(), tot_elems_);
-  return memory_delta;
+  // return memory_delta;
 }
 
 
@@ -372,6 +378,16 @@ int QuantileEstimator::AddElem(const string& elem) {
 //   // We display the quantiles, not the raw output.
 //   ComputeQuantiles(buffer_, min_, max_, num_quantiles_, tot_elems_, output);
 // }
+
+void QuantileEstimator::Estimate() {
+  vector<string> *output = new vector<string>;
+  output->clear();
+  if (tot_elems_ == 0) {
+    output->push_back("");
+  }
+  // We display the quantiles, not the raw output.
+  ComputeQuantiles(buffer_, min_, max_, num_quantiles_, tot_elems_, output);
+}
 
 
 // Simple helper function to extract a value from "dec" by using "ops()".

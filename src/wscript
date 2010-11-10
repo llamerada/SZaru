@@ -4,6 +4,8 @@ def build(bld):
   emitters/szltopheap.cc
   emitters/szlsketch.cc
   emitters/szltop.cc
+  emitters/szlquantile.cc
+  emitters/szlcomputequantiles.cc
   public/hashutils.cc
   """,
       features ='cxx cxxshlib',
