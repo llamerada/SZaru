@@ -3,6 +3,7 @@
 #include "topheap.h"
 #include "szlsketch.h"
 #include "top.h"
+#include "szlquantile.h"
 
 extern "C" {
   void Init_szaru(void);

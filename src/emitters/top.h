@@ -40,7 +40,7 @@ public:
 
   // Add a new element  with weight to this entry.
   virtual void AddWeightedElem(const std::string& elem, double weight) = 0;
-
+  
   // Estimate the number of top entries.
   // estimate = (maxelems << bits-in-hash) / biggest-small-elem
   virtual void Estimate(std::vector<Elem>& topElems) = 0;
