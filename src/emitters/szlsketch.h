@@ -23,6 +23,7 @@ namespace SZaru {
 // "Finding Frequent Items in Data Streams",
 //   Moses Charikar, Kevin Chen, and Martin Farach-Colton.
 
+template <typename Value>
 class SzlSketch {
  public:
   // Bounds on the number of tables we create.
@@ -50,10 +51,10 @@ class SzlSketch {
   void ComputeIndex(const std::string& s, Index* index);
 
   // Adjust the estimated weight for an index.
-  void AddSub(Index* index, double value, int isAdd);
+  void AddSub(Index* index, Value value, int isAdd);
 
   // Compute the estimated weight for an index.
-  void Estimate(Index* index, double* est);
+  void Estimate(Index* index, Value* est);
 
   // Compute the estimated standard deviation of values in the sketch.
   void StdDeviation(double* deviations);
@@ -81,7 +82,7 @@ class SzlSketch {
   // const SzlOps& weight_ops_;
 
   // storage of the sketch.
-  double* weights_;           // 2d array of weights[nTabs][tabsize]
+  Value* weights_;           // 2d array of weights[nTabs][tabsize]
   // double tmp_[kMaxTabs];      // temporary computation array
   int nTabs_;                   // kMinTabs <= nTabs <= kMaxTabs
   int tabSize_;                 // must be pow(2)
@@ -89,3 +90,5 @@ class SzlSketch {
 };
 
 }
+
+#include "emitters/szlsketch.cc"

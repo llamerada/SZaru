@@ -21,23 +21,19 @@
 
 #include "openssl/md5.h"
 
-#include "public/porting.h"
-#include "public/logging.h"
-#include "public/hashutils.h"
-
 // #include "public/szltype.h"
 // #include "public/szlvalue.h"
 // #include "public/szlencoder.h"
 // #include "public/szldecoder.h"
 // #include "public/szltabentry.h"
 
-#include "emitters/szlsketch.h"
-
 namespace SZaru {
 
 // Return the dimensions of a sketch such that nTabs * tabSize ~= totalSize.
 // Our algorithm assumes tabSize is a pow of 2, nTabs is odd.
-void SzlSketch::Dims(int totalSize, int* nTabs, int* tabSize) {
+
+template <typename Value>
+void SzlSketch<Value>::Dims(int totalSize, int* nTabs, int* tabSize) {
   int ts = totalSize / 31;
   int bits;
   for (bits = 2; bits < 32 && ts > (1 << bits); bits++)
@@ -50,12 +46,13 @@ void SzlSketch::Dims(int totalSize, int* nTabs, int* tabSize) {
   *tabSize = 1 << bits;
 }
 
-SzlSketch::SzlSketch(int nTabs, int tabSize)
-  : weights_(new double[nTabs * tabSize]),
+template <typename Value>
+SzlSketch<Value>::SzlSketch(int nTabs, int tabSize)
+  : weights_(new Value[nTabs * tabSize]),
     nTabs_(nTabs),
     tabSize_(tabSize) {
-  // doubles's are clear by default, so we don't need to clear weights_
-
+  // SzlValues's are clear by default, so we don't need to clear weights_
+  
   // Check for valid nTabs, pow(2) tabSize;
   // CHECK(nTabs >= kMinTabs && nTabs <= kMaxTabs && (nTabs & 1) == 1);
   // CHECK(tabSize > 0 && (tabSize & (tabSize - 1)) == 0);
@@ -66,7 +63,8 @@ SzlSketch::SzlSketch(int nTabs, int tabSize)
   tabBits_ = bits;
 }
 
-SzlSketch::~SzlSketch() {
+template <typename Value>
+SzlSketch<Value>::~SzlSketch() {
   // int n = nTabs_ * tabSize_;
   // for (int i = 0; i <  n; i++)
   // weight_ops_.Clear(&weights_[i]);
@@ -76,7 +74,7 @@ SzlSketch::~SzlSketch() {
   //    weight_ops_.Clear(&tmp_[i]);
 }
 
-// int SzlSketch::Memory() {
+// int SzlSketch<Value>::Memory() {
 //   int mem = sizeof(SzlSketch);
 
 //   int n = nTabs_ * tabSize_;
@@ -90,14 +88,14 @@ SzlSketch::~SzlSketch() {
 // }
 
 // Encode the weights in the SzlSketch.
-// void SzlSketch::Encode(SzlEncoder* enc) {
+// void SzlSketch<Value>::Encode(SzlEncoder* enc) {
 //   int n = nTabs_ * tabSize_;
 //   for (int i = 0; i < n; i++)
 //     weight_ops_.Encode(weights_[i], enc);
 // }
 
 // // Decode the weights in the SzlSketch.
-// bool SzlSketch::Decode(SzlDecoder* dec) {
+// bool SzlSketch<Value>::Decode(SzlDecoder* dec) {
 //   int n = nTabs_ * tabSize_;
 //   for (int i = 0; i < n; i++)
 //     if (!weight_ops_.Decode(dec, &weights_[i]))
@@ -105,7 +103,8 @@ SzlSketch::~SzlSketch() {
 //   return true;
 // }
 
-void SzlSketch::AddSketch(const SzlSketch& sketch) {
+template <typename Value>
+void SzlSketch<Value>::AddSketch(const SzlSketch& sketch) {
   assert(sketch.tabSize() == tabSize());
   int n = nTabs_ * tabSize_;
   for (int i = 0; i < n; ++i)
@@ -116,7 +115,8 @@ void SzlSketch::AddSketch(const SzlSketch& sketch) {
 // Compute the indices into the sketch weights,
 //   We need nTabs different hashes of the string,
 //   which we get by computing md5 on slightly different strings.
-void SzlSketch::ComputeIndex(const string& s, Index* index) {
+template <typename Value>
+void SzlSketch<Value>::ComputeIndex(const string& s, Index* index) {
   // original set of hash bits comes from a good hash of the key.
   uint8 digest[MD5_DIGEST_LENGTH];
   MD5Digest(s.data(), s.size(), &digest);
@@ -151,15 +151,16 @@ void SzlSketch::ComputeIndex(const string& s, Index* index) {
 
 // Adjust the sketch for a given index.
 //   Just add or subtract the weight for each entry.
-void SzlSketch::AddSub(SzlSketch::Index* index,
-                       double value,
-                       int isAdd) {
+template <typename Value>
+void SzlSketch<Value>::AddSub(Index* index,
+			      Value value,
+			      int isAdd) {
   for (int i = 0; i < nTabs_; ++i) {
-    assert(index->index[i].elem >= i * tabSize_
-           && index->index[i].elem < (i + 1) * tabSize_
+    assert(index->index[i].elem >= static_cast<size_t>(i) * tabSize_
+           && index->index[i].elem < (static_cast<size_t>(i) + 1) * tabSize_
            && index->index[i].sign <= 1);
-    double *w = &weights_[index->index[i].elem];
-    if (index->index[i].sign == isAdd)
+    Value *w = &weights_[index->index[i].elem];
+    if (index->index[i].sign == static_cast<uint32_t>(isAdd))
       // weight_ops_.Sub(value, w);
       *w -= value;
     else
@@ -183,11 +184,12 @@ void SzlSketch::AddSub(SzlSketch::Index* index,
 // Estimate the weight for an index.
 //   We use the median as the estimate, since it's supposed to be superior
 //   to using the mean.
-void SzlSketch::Estimate(Index* index, double* est) {
+template <typename Value>
+void SzlSketch<Value>::Estimate(Index* index, Value* est) {
   // first make the array of all weights with signs corrected
-  double values[kMaxTabs];
+  Value values[kMaxTabs];
   for (int i = 0; i < nTabs_; ++i) {
-    double w = weights_[index->index[i].elem];
+    Value w = weights_[index->index[i].elem];
     if (index->index[i].sign) {
       // values[i] = &tmp_[i];
       // weight_ops_.Negate(*w, &tmp_[i]);
@@ -198,8 +200,8 @@ void SzlSketch::Estimate(Index* index, double* est) {
   }
 
   unsigned nTabs2 = nTabs_ >> 1;
-  double* mid = &values[nTabs2];
-  double* last = &values[nTabs_];
+  Value* mid = &values[nTabs2];
+  Value* last = &values[nTabs_];
   // for (int i = 0; i < weight_ops_.nflats(); i++) {
 //     SzlSketchEstLess estless(weight_ops_, i);
 //     nth_element(values, mid, last, estless);
@@ -211,7 +213,8 @@ void SzlSketch::Estimate(Index* index, double* est) {
 }
 
 // Compute the estimated standard deviation of values in the sketch.
-void SzlSketch::StdDeviation(double* deviations) {
+template <typename Value>
+void SzlSketch<Value>::StdDeviation(double* deviations) {
   // int nvals = weight_ops_.nflats();
   int nvals = 1;
   for (int j = 0; j < nvals; j++)
@@ -222,7 +225,7 @@ void SzlSketch::StdDeviation(double* deviations) {
 
   // compute the error in each column of the sketch.
   double* columns = new double[tabSize_ * nvals];
-  double col;
+  Value col;
   double* ave = new double[nvals];
   for (int i = 0; i < nvals; i++)
     ave[i] = 0.;

@@ -49,7 +49,7 @@ public:
       sketch_(NULL),
       tops_(param * 10),
       totElems_(0) {
-    SzlSketch::Dims(param * 100, &sketchTabs_, &sketchTabSize_);
+    SzlSketch<double>::Dims(param * 100, &sketchTabs_, &sketchTabSize_);
     sketch_ = NULL;
   }
   ~TopEstimatorImpl()  { delete sketch_; }
@@ -105,7 +105,7 @@ private:
   
   // Structure for keeping track of weights for elements not in the top.
   // Lazily allocated with an added element or non-empty merge.
-  SzlSketch* sketch_;
+  SzlSketch<double>* sketch_;
   
   // Structure for keeping track of the current top elements.
   // TODO: Add an iterator for sorted output to improve
@@ -163,14 +163,14 @@ void TopEstimatorImpl::AddWeightedElem(const string& elem,
   // int mem = 0;
   if (sketch_ == NULL) {
     // sketch_ = new SzlSketch(weight_ops(), sketchTabs_, sketchTabSize_);
-    sketch_ = new SzlSketch(sketchTabs_, sketchTabSize_);
+    sketch_ = new SzlSketch<double>(sketchTabs_, sketchTabSize_);
     // mem += sketch_->Memory();
   }
 
   // Add its weight from the sketch.
-  SzlSketch::Index index;
+  SzlSketch<double>::Index index;
   sketch_->ComputeIndex(elem, &index);
-  double sw;
+  double sw = 0;
   sketch_->Estimate(&index, &sw);
   double tw;
   // weight_ops().Assign(w, &tw);
@@ -348,7 +348,7 @@ void TopEstimatorImpl::Estimate(std::vector<Elem>& topElems) {
 //       assert(e != NULL);
 
 //       // Add its weight from the sketch.
-//       SzlSketch::Index index;
+//       SzlSketch<double>::Index index;
 //       newsketch->ComputeIndex(e->value, &index);
 //       newsketch->Estimate(&index, &w);
 //       tops_.AddToWeight(w, e);
