@@ -29,7 +29,7 @@ public:
   virtual void AddElem(const Key& elm) = 0;
 
   // Estimate the quantile entries.
-  virtual void Estimate() = 0;
+  virtual void Estimate(std::vector<Key>& output) = 0;
 
   // Get the number of elements added to this entry in the table.
   virtual uint64_t TotElems() const = 0;
@@ -40,6 +40,7 @@ protected:
 
 // factory class
 class QuantileEstimatorFactory {
+public:
   static QuantileEstimator<int32_t>* CreateInt32(uint32_t numQuantiles);
   static QuantileEstimator<int64_t>* CreateInt64(uint32_t numQuantiles);
   static QuantileEstimator<double>* CreateDouble(uint32_t numQuantiles);

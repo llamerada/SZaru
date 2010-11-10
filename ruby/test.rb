@@ -40,6 +40,25 @@ def test_top
   p te.estimate
 end
 
+def test_quantile
+  te = SZaru::Int64QuantileEstimator.new(10)
+  ary = []
+  1000.times do |i|
+    # i.times do |j|
+    ary << i
+  end
+  rand_ary  = ary.sort_by{rand}
+  # $stdout.sync = true
+  # puts "start"
+  rand_ary.each_with_index do |e, i|
+    te.add_elem(e)
+  end
+  p te.estimate
+end
+
+
+
 # test_topheap
 # test_sketch
-test_top
+# test_top
+test_quantile

@@ -18,7 +18,9 @@
 #include <string>
 #include <vector>
 
+#include "emitters/quantile.h"
 
+using namespace std;
 // Structure for storing approx quantiles for each key in the table.
 // Declared as: table quantile(N)[...] of value: <ordered sawtype>
 // The parameter N (>=2) sets the relative error (eps_) that we are ready to
@@ -31,16 +33,18 @@ namespace SZaru {
   // The entry for each key inserted in a szl "table". If the
   // table is not indexed then there is only one entry
   // for the entire table.
-  class QuantileEstimator {
+  template<typename Key>
+  class QuantileEstimatorImpl : public QuantileEstimator<Key> {
    public:
-    explicit QuantileEstimator(int param)
+    explicit QuantileEstimatorImpl(int param)
       : tot_elems_(0),
 	num_quantiles_(std::max(param, 2)) {
       k_ = ComputeK();
       Clear();
     }
-    virtual ~QuantileEstimator() { Clear(); }
-    virtual void AddElem(const std::string& elem);
+    virtual ~QuantileEstimatorImpl() { Clear(); }
+    
+    virtual void AddElem(const Key& elem);
     // virtual void Flush(string* output);
     // virtual void FlushForDisplay(vector<string>* output);
     // virtual SzlTabEntry::MergeStatus Merge(const string& val);
@@ -53,10 +57,10 @@ namespace SZaru {
     }
 
     //     virtual int Memory();
-    virtual int64_t TotElems() const  { return tot_elems_; }
+    virtual uint64_t TotElems() const  { return tot_elems_; }
     virtual int TupleCount()  { return buffer_.size(); }
 
-    virtual void Estimate();
+    virtual void Estimate(vector<Key>& output);
 
     // const SzlOps& element_ops() const  { return element_ops_; }
 
@@ -71,16 +75,19 @@ namespace SZaru {
 
     int64_t ComputeK();
     void EnsureBuffer(const int level);
-    void Collapse(std::vector<std::string> *const a, std::vector<std::string> *const b,
-                 std::vector<std::string> *const output);
-    void RecursiveCollapse(std::vector<std::string> *buf, const int level);
+    void Collapse(std::vector<Key> *const a, std::vector<Key> *const b,
+                 std::vector<Key> *const output);
+    void RecursiveCollapse(std::vector<Key> *buf, const int level);
     // bool EncodingToString(SzlDecoder *const dec, string *const output);
-
+    
     uint64_t tot_elems_;
     const int num_quantiles_;  // #quantiles
-    std::vector<std::vector<std::string>* > buffer_;
+    std::vector<std::vector<Key>* > buffer_;
     int64_t k_;  // max #elements in any buffer_[i]
-    std::string min_;
-    std::string max_;
+    Key min_;
+    Key max_;
   };
-};
+
+}
+
+#include "emitters/szlquantile.cc"

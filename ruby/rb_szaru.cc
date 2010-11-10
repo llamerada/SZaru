@@ -3,11 +3,62 @@
 #include "topheap.h"
 #include "szlsketch.h"
 #include "top.h"
-#include "szlquantile.h"
+#include "quantile.h"
 
 extern "C" {
   void Init_szaru(void);
 }
+
+// Int64QuantileEstimator start
+static void
+rb_Int64QuantileEstimator_Free(SZaru::QuantileEstimator<int64_t> **ptr)
+{
+  if (*ptr) {
+    delete *ptr;
+  }
+}
+
+static VALUE
+rb_Int64QuantileEstimator_Alloc(VALUE klass)
+{
+  SZaru::QuantileEstimator<int64_t> **ptr = ALLOC(SZaru::QuantileEstimator<int64_t>*);
+  *ptr = NULL;
+  return Data_Wrap_Struct(klass, 0, rb_Int64QuantileEstimator_Free, ptr);
+}
+
+static VALUE
+rb_Int64QuantileEstimator_Initialize(VALUE self, VALUE maxElems)
+{
+  SZaru::QuantileEstimator<int64_t> **ptr;
+  Data_Get_Struct(self, SZaru::QuantileEstimator<int64_t>*, ptr);
+  *ptr = SZaru::QuantileEstimatorFactory::CreateInt64(NUM2LONG(maxElems));
+  return Qnil;
+}
+
+static VALUE
+rb_Int64QuantileEstimator_AddElem(VALUE self, VALUE elem)
+{
+  SZaru::QuantileEstimator<int64_t> **te;
+  Check_Type(elem, T_FIXNUM);
+  Data_Get_Struct(self, SZaru::QuantileEstimator<int64_t>*, te);
+  (*te)->AddElem(FIX2INT(elem));
+  return Qnil;
+}
+
+static VALUE
+rb_Int64QuantileEstimator_Estimate(VALUE self)
+{
+  SZaru::QuantileEstimator<int64_t> **te;
+  Data_Get_Struct(self, SZaru::QuantileEstimator<int64_t>*, te);
+  std::vector<int64_t> quantiles;
+  (*te)->Estimate(quantiles);
+  VALUE ary = rb_ary_new2(quantiles.size());
+  for (int i = 0; i < quantiles.size(); i++) {
+    rb_ary_push(ary, LONG2FIX(quantiles[i]));
+  }
+  return ary;
+}
+// Int64QuantileEstimatorg end
 
 // TopEstimator start
 static void
@@ -201,6 +252,7 @@ Init_szaru(void){
   rb_define_method(cUniqueEstimator, "estimate", 
 		   RUBY_METHOD_FUNC(rb_UniqueEstimator_Estimate), 0);
 
+  // TopEstimator
   VALUE cTopEstimator = rb_define_class_under(mSZaru, "TopEstimator", rb_cObject);
   rb_define_alloc_func(cTopEstimator, rb_TopEstimator_Alloc);
   rb_define_private_method(cTopEstimator, "initialize", 
@@ -209,6 +261,16 @@ Init_szaru(void){
 		   RUBY_METHOD_FUNC(rb_TopEstimator_AddElem), 1);
   rb_define_method(cTopEstimator, "estimate", 
 		   RUBY_METHOD_FUNC(rb_TopEstimator_Estimate), 0);
+
+  // Int64QuantileEstimator
+  VALUE cInt64QuantileEstimator = rb_define_class_under(mSZaru, "Int64QuantileEstimator", rb_cObject);
+  rb_define_alloc_func(cInt64QuantileEstimator, rb_Int64QuantileEstimator_Alloc);
+  rb_define_private_method(cInt64QuantileEstimator, "initialize", 
+			   RUBY_METHOD_FUNC(rb_Int64QuantileEstimator_Initialize), 1);
+  rb_define_method(cInt64QuantileEstimator, "add_elem", 
+		   RUBY_METHOD_FUNC(rb_Int64QuantileEstimator_AddElem), 1);
+  rb_define_method(cInt64QuantileEstimator, "estimate", 
+		   RUBY_METHOD_FUNC(rb_Int64QuantileEstimator_Estimate), 0);
 
   // TopHeap
   VALUE cTopHeap = rb_define_class_under(mSZaru, "TopHeap", rb_cObject);
