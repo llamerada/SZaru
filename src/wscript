@@ -3,6 +3,7 @@ def build(bld):
   emitters/szlunique.cc
   emitters/szltopheap.cc
   emitters/szlsketch.cc
+  emitters/szltop.cc
   public/hashutils.cc
   """,
       features ='cxx cxxshlib',
