@@ -29,7 +29,7 @@ end
 def test_top
   te = SZaru::TopEstimator.new(10)
   ary = []
-  1000.times do |i|
+  100.times do |i|
     i.times do |j|
       ary << "test#{i}"
     end
@@ -60,5 +60,5 @@ end
 
 # test_topheap
 # test_sketch
-# test_top
-test_quantile
+test_top
+# test_quantile

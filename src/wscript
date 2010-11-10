@@ -1,7 +1,7 @@
 def build(bld):
   bld(source = """
   emitters/szlunique.cc
-  emitters/szltop.cc
+  emitters/top.cc
   emitters/quantile.cc
   public/hashutils.cc
   """,

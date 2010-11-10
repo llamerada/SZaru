@@ -42,24 +42,27 @@
 
 namespace SZaru {
 
-class TopEstimatorImpl : public TopEstimator {
+template<typename Value>
+class TopEstimatorImpl : public TopEstimator<Value> {
 public:
   explicit TopEstimatorImpl(int param)
     : param_(param),
       sketch_(NULL),
       tops_(param * 10),
       totElems_(0) {
-    SzlSketch<double>::Dims(param * 100, &sketchTabs_, &sketchTabSize_);
+    SzlSketch<Value>::Dims(param * 100, &sketchTabs_, &sketchTabSize_);
     sketch_ = NULL;
   }
   ~TopEstimatorImpl()  { delete sketch_; }
+
+  typedef typename TopEstimator<Value>::Elem Elem;
   
   virtual void AddElem(const string& elem) {
     // return AddWeightedElem(elem, SzlValue(static_cast<int64>(1)));
     return AddWeightedElem(elem, 1.0);
   }
   
-  virtual void AddWeightedElem(const string& elem, double weight);
+  virtual void AddWeightedElem(const string& elem, Value weight);
   // virtual void Flush(string* output);
   // virtual void FlushForDisplay(vector<string>* output);
   // virtual SzlTabEntry::MergeStatus Merge(const string& vals);
@@ -105,12 +108,12 @@ private:
   
   // Structure for keeping track of weights for elements not in the top.
   // Lazily allocated with an added element or non-empty merge.
-  SzlSketch<double>* sketch_;
+  SzlSketch<Value>* sketch_;
   
   // Structure for keeping track of the current top elements.
   // TODO: Add an iterator for sorted output to improve
   // Flush performance.
-  SzlTopHeap<double> tops_;
+  SzlTopHeap<Value> tops_;
   
   // Number and the size of tables in the sketch.
   int sketchTabs_;
@@ -119,11 +122,6 @@ private:
   // Total elements ever added to this entry in the table.
   int64 totElems_;
 };
-
-TopEstimator *
-TopEstimator::Create(int maxElems) {
-  return new TopEstimatorImpl(maxElems);
-}
 
   //  REGISTER_SZL_TAB_WRITER(top, SzlTop);
 
@@ -143,15 +141,15 @@ TopEstimator::Create(int maxElems) {
 //   return new SzlTop(type);
 // }
 
-
-void TopEstimatorImpl::AddWeightedElem(const string& elem,
-                                         double w) {
+template <typename Value>
+void TopEstimatorImpl<Value>::AddWeightedElem(const string& elem,
+                                         Value w) {
   ++totElems_;
   if (!tops_.maxElems())
     return;
-
+  
   // Is the element in list of candidate tops?
-  SzlTopHeap<double>::Elem* e = tops_.Find(elem);
+  typename SzlTopHeap<Value>::Elem* e = tops_.Find(elem);
   if (e != NULL)
     return tops_.AddToWeight(w, e);  // Just adjust weight in candidate list.
 
@@ -163,21 +161,21 @@ void TopEstimatorImpl::AddWeightedElem(const string& elem,
   // int mem = 0;
   if (sketch_ == NULL) {
     // sketch_ = new SzlSketch(weight_ops(), sketchTabs_, sketchTabSize_);
-    sketch_ = new SzlSketch<double>(sketchTabs_, sketchTabSize_);
+    sketch_ = new SzlSketch<Value>(sketchTabs_, sketchTabSize_);
     // mem += sketch_->Memory();
   }
 
   // Add its weight from the sketch.
-  SzlSketch<double>::Index index;
+  typename SzlSketch<Value>::Index index;
   sketch_->ComputeIndex(elem, &index);
-  double sw = 0;
+  Value sw = 0;
   sketch_->Estimate(&index, &sw);
-  double tw;
+  Value tw;
   // weight_ops().Assign(w, &tw);
   // weight_ops().Add(sw, &tw);
   tw = w + sw;
   // Is it still smaller than the smallest candidate?
-  SzlTopHeap<double>::Elem* worst = tops_.Smallest();
+  typename SzlTopHeap<Value>::Elem* worst = tops_.Smallest();
   // if (weight_ops().Less(tw, worst->weight)) {
   if (tw < worst->weight) {
     // Yup.  Just adjust the weight in the sketch.
@@ -194,7 +192,8 @@ void TopEstimatorImpl::AddWeightedElem(const string& elem,
   return;
 }
 
-void TopEstimatorImpl::Estimate(std::vector<Elem>& topElems) {
+template <typename Value>
+void TopEstimatorImpl<Value>::Estimate(std::vector<Elem>& topElems) {
   topElems.clear();
   int nTopElems;
   if (static_cast<size_t>(param_) < tops_.nElems()) {
@@ -208,7 +207,7 @@ void TopEstimatorImpl::Estimate(std::vector<Elem>& topElems) {
   // Note: After sorting, heap is destroyed, so can't call AddElem.
   tops_.Sort();
   for (int i = 0; i < nTopElems; ++i) {
-    const SzlTopHeap<double>::Elem* e = tops_.Element(i);
+    const typename SzlTopHeap<Value>::Elem* e = tops_.Element(i);
     Elem outputElem;
     outputElem.value = e->value;
     outputElem.weight = e->weight;
@@ -250,7 +249,7 @@ void TopEstimatorImpl::Estimate(std::vector<Elem>& topElems) {
 
 //   tops_.Sort();
 //   const int nerrs = weight_ops().nflats();
-//   double* err = new double[nerrs];
+//   Value* err = new Value[nerrs];
 //   if (sketch_ != NULL) {
 //     sketch_->StdDeviation(err);
 //   } else {
@@ -348,7 +347,7 @@ void TopEstimatorImpl::Estimate(std::vector<Elem>& topElems) {
 //       assert(e != NULL);
 
 //       // Add its weight from the sketch.
-//       SzlSketch<double>::Index index;
+//       SzlSketch<Value>::Index index;
 //       newsketch->ComputeIndex(e->value, &index);
 //       newsketch->Estimate(&index, &w);
 //       tops_.AddToWeight(w, e);

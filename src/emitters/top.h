@@ -21,7 +21,8 @@
 #include <vector>
 
 namespace SZaru{
-  
+
+template<typename Value>
 class TopEstimator {
 public:
   // factory
@@ -32,14 +33,14 @@ public:
   // Combination of a value & weight.
   struct Elem {
     std::string value;
-    double weight;
+    Value weight;
   };
   
   // Add a new element to this entry.
   virtual void AddElem(const std::string& elm) = 0;
 
   // Add a new element  with weight to this entry.
-  virtual void AddWeightedElem(const std::string& elem, double weight) = 0;
+  virtual void AddWeightedElem(const std::string& elem, Value weight) = 0;
   
   // Estimate the number of top entries.
   // estimate = (maxelems << bits-in-hash) / biggest-small-elem
@@ -50,6 +51,14 @@ public:
 
 protected:
   TopEstimator() {}
+};
+
+// factory class
+class TopEstimatorFactory {
+public:
+  static TopEstimator<int32_t>* CreateInt32(uint32_t numTops);
+  static TopEstimator<int64_t>* CreateInt64(uint32_t numTops);
+  static TopEstimator<double>* CreateDouble(uint32_t numTops);
 };
 
 }
