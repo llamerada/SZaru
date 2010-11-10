@@ -22,4 +22,24 @@ def test_topheap
   p th.smallest
 end
 
-test_topheap
+def test_sketch
+  sketch = SZaru::Sketch.new(10 * 100)
+end
+
+def test_top
+  te = SZaru::TopEstimator.new(10)
+  ary = []
+  1000.times do |i|
+    i.times do |j|
+      ary << "test#{i}"
+    end
+  end
+  ary.sort_by{rand}.each do |e|
+    te.add_elem(e)
+  end
+  p te.estimate
+end
+
+# test_topheap
+# test_sketch
+test_top

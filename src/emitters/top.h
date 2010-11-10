@@ -13,38 +13,45 @@
 // limitations under the License.
 // ------------------------------------------------------------------------
 
-#ifndef _SZARU_UNIQUE_
-#define _SZARU_UNIQUE_
+#ifndef _SZARU_TOP_
+#define _SZARU_TOP_
 
 #include <stdint.h>
 #include <string>
+#include <vector>
 
 namespace SZaru{
   
-class UniqueEstimator {
+class TopEstimator {
 public:
   // factory
-  static UniqueEstimator* Create(int maxElems);
+  static TopEstimator* Create(int maxElems);
   
-  virtual ~UniqueEstimator() {};
+  virtual ~TopEstimator() {};
+
+  // Combination of a value & weight.
+  struct Elem {
+    std::string value;
+    double weight;
+  };
   
   // Add a new element to this entry.
   virtual void AddElem(const std::string& elm) = 0;
 
-  // Add a new element to this entry.
-  virtual void AddElemInCIF(const char *data, size_t size_t) = 0;
+  // Add a new element  with weight to this entry.
+  virtual void AddWeightedElem(const std::string& elem, double weight) = 0;
 
-  // Estimate the number of unique entries.
+  // Estimate the number of top entries.
   // estimate = (maxelems << bits-in-hash) / biggest-small-elem
-  virtual int64_t Estimate() const = 0;
-
+  virtual void Estimate(std::vector<Elem>& topElems) = 0;
+  
   // Get the number of elements added to this entry in the table.
   virtual uint64_t TotElems() const = 0;
 
 protected:
-  UniqueEstimator() {}
+  TopEstimator() {}
 };
 
 }
 
-#endif  //  _SZARU_UNIQUE_
+#endif  //  _SZARU_TOP_
