@@ -1,4 +1,4 @@
-require "szaru"
+require File.join(File.dirname(__FILE__), "../ext/szaru")
 
 def test_unique
   ue = SZaru::UniqueEstimator.new(4)
