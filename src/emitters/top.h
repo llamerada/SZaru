@@ -26,7 +26,7 @@ template<typename Value>
 class TopEstimator {
 public:
   // factory
-  static TopEstimator* Create(int maxElems);
+  static TopEstimator* Create(uint32_t numTops);
   
   virtual ~TopEstimator() {};
 
@@ -60,6 +60,24 @@ public:
   static TopEstimator<int64_t>* CreateInt64(uint32_t numTops);
   static TopEstimator<double>* CreateDouble(uint32_t numTops);
 };
+
+template <>
+TopEstimator<int32_t>* 
+TopEstimator<int32_t>::Create(uint32_t numTops) {
+  return TopEstimatorFactory::CreateInt32(numTops);
+}
+
+template <>
+TopEstimator<int64_t>* 
+TopEstimator<int64_t>::Create(uint32_t numTops) {
+  return TopEstimatorFactory::CreateInt64(numTops);
+}
+
+template <>
+TopEstimator<double>* 
+TopEstimator<double>::Create(uint32_t numTops) {
+  return TopEstimatorFactory::CreateDouble(numTops);
+}
 
 }
 

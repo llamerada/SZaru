@@ -23,6 +23,9 @@ namespace SZaru{
 template <typename Key>
 class QuantileEstimator {
 public:
+  // factory
+  static QuantileEstimator* Create(uint32_t numQuantiles);
+
   virtual ~QuantileEstimator() {};
   
   // Add a new element to this entry.
@@ -45,6 +48,24 @@ public:
   static QuantileEstimator<int64_t>* CreateInt64(uint32_t numQuantiles);
   static QuantileEstimator<double>* CreateDouble(uint32_t numQuantiles);
 };
+
+template <>
+QuantileEstimator<int32_t>* 
+QuantileEstimator<int32_t>::Create(uint32_t numQuantiles) {
+  return QuantileEstimatorFactory::CreateInt32(numQuantiles);
+}
+
+template <>
+QuantileEstimator<int64_t>* 
+QuantileEstimator<int64_t>::Create(uint32_t numQuantiles) {
+  return QuantileEstimatorFactory::CreateInt64(numQuantiles);
+}
+
+template <>
+QuantileEstimator<double>* 
+QuantileEstimator<double>::Create(uint32_t numQuantiles) {
+  return QuantileEstimatorFactory::CreateDouble(numQuantiles);
+}
 
 }
 
