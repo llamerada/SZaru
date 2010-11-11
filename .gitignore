@@ -17,6 +17,12 @@ tmtags
 coverage
 rdoc
 pkg
-
 ## PROJECT::SPECIFIC
+
+## waf specific
 .waf*
+build
+.lock-wafbuild
+
+
+
