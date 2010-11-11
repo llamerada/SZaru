@@ -11,21 +11,6 @@ def test_unique
   puts ue.estimate
 end
 
-
-def test_topheap
-  th = SZaru::TopHeap.new(3)
-  th.add_new_elem("test", 45.0)
-  th.add_new_elem("test1", 3.0)
-  th.add_new_elem("test2", 2.4)
-  th.add_new_elem("test3", 4.0)
-  th.add_new_elem("test4", 9.1)
-  p th.smallest
-end
-
-def test_sketch
-  sketch = SZaru::Sketch.new(10 * 100)
-end
-
 def test_top
   te = SZaru::TopEstimator::Int32.new(10)
   ary = []
@@ -36,6 +21,18 @@ def test_top
   end
   ary.sort_by{rand}.each do |e|
     te.add_elem(e)
+  end
+  p te.estimate
+end
+
+def test_top2
+  te = SZaru::TopEstimator::Double.new(10)
+  ary = []
+  100.times do |i|
+    ary << ["test#{i}", i]
+  end
+  ary.sort_by{rand}.each do |e, w|
+    te.add_weighted_elem(e, w.to_f)
   end
   p te.estimate
 end
@@ -62,4 +59,5 @@ end
 # test_sketch
 test_unique
 test_top
+test_top2
 test_quantile
