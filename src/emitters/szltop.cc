@@ -58,8 +58,7 @@ public:
   typedef typename TopEstimator<Value>::Elem Elem;
   
   virtual void AddElem(const string& elem) {
-    // return AddWeightedElem(elem, SzlValue(static_cast<int64>(1)));
-    return AddWeightedElem(elem, 1.0);
+    return AddWeightedElem(elem, Value(static_cast<int64>(1)));
   }
   
   virtual void AddWeightedElem(const string& elem, Value weight);

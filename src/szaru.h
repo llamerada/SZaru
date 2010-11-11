@@ -24,7 +24,7 @@ namespace SZaru{
   
 class UniqueEstimator {
 public:
-  // factory
+  // factory method
   static UniqueEstimator* Create(int maxElems);
   
   virtual ~UniqueEstimator() {};
@@ -32,7 +32,7 @@ public:
   // Add a new element to this entry.
   virtual void AddElem(const std::string& elm) = 0;
 
-  // Add a new element to this entry.
+  // Add a new element to this entry in c_str IF.
   virtual void AddElemInCIF(const char *data, size_t size_t) = 0;
 
   // Estimate the number of unique entries.
@@ -49,7 +49,7 @@ protected:
 template<typename Value>
 class TopEstimator {
 public:
-  // factory
+  // factory method
   static TopEstimator* Create(uint32_t numTops);
   
   virtual ~TopEstimator() {};
@@ -67,7 +67,6 @@ public:
   virtual void AddWeightedElem(const std::string& elem, Value weight) = 0;
   
   // Estimate the number of top entries.
-  // estimate = (maxelems << bits-in-hash) / biggest-small-elem
   virtual void Estimate(std::vector<Elem>& topElems) = 0;
   
   // Get the number of elements added to this entry in the table.
