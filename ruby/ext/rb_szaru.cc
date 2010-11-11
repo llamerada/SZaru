@@ -15,8 +15,8 @@
 
 // Ruby Binding of SZaru
 
-#include "ruby.h"
-#include "szaru.h"
+#include <ruby.h>
+#include <szaru.h>
 // local include file
 #include "converter.h"
 
