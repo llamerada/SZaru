@@ -1,261 +1,237 @@
 #include "ruby.h"
 #include "unique.h"
-//#include "topheap.h"
-// #include "szlsketch.h"
 #include "top.h"
 #include "quantile.h"
+
+// local include files
+#include "converter.h"
 
 extern "C" {
   void Init_szaru(void);
 }
 
-// Int64QuantileEstimator start
-static void
-rb_Int64QuantileEstimator_Free(SZaru::QuantileEstimator<int64_t> **ptr)
-{
-  if (*ptr) {
-    delete *ptr;
+template<typename Value>
+class RubyQuantileEstimator {
+private:
+  static void
+  Free(SZaru::QuantileEstimator<Value> **ptr)
+  {
+    if (*ptr) {
+      delete *ptr;
+    }
   }
-}
-
-static VALUE
-rb_Int64QuantileEstimator_Alloc(VALUE klass)
-{
-  SZaru::QuantileEstimator<int64_t> **ptr = ALLOC(SZaru::QuantileEstimator<int64_t>*);
-  *ptr = NULL;
-  return Data_Wrap_Struct(klass, 0, rb_Int64QuantileEstimator_Free, ptr);
-}
-
-static VALUE
-rb_Int64QuantileEstimator_Initialize(VALUE self, VALUE maxElems)
-{
-  SZaru::QuantileEstimator<int64_t> **ptr;
-  Data_Get_Struct(self, SZaru::QuantileEstimator<int64_t>*, ptr);
-  *ptr = SZaru::QuantileEstimatorFactory::CreateInt64(NUM2LONG(maxElems));
-  return Qnil;
-}
-
-static VALUE
-rb_Int64QuantileEstimator_AddElem(VALUE self, VALUE elem)
-{
-  SZaru::QuantileEstimator<int64_t> **te;
-  Check_Type(elem, T_FIXNUM);
-  Data_Get_Struct(self, SZaru::QuantileEstimator<int64_t>*, te);
-  (*te)->AddElem(FIX2INT(elem));
-  return Qnil;
-}
-
-static VALUE
-rb_Int64QuantileEstimator_Estimate(VALUE self)
-{
-  SZaru::QuantileEstimator<int64_t> **te;
-  Data_Get_Struct(self, SZaru::QuantileEstimator<int64_t>*, te);
-  std::vector<int64_t> quantiles;
-  (*te)->Estimate(quantiles);
-  VALUE ary = rb_ary_new2(quantiles.size());
-  for (int i = 0; i < quantiles.size(); i++) {
-    rb_ary_push(ary, LONG2FIX(quantiles[i]));
+  
+  static VALUE
+  Alloc(VALUE klass)
+  {
+    SZaru::QuantileEstimator<Value> **ptr = ALLOC(SZaru::QuantileEstimator<Value>*);
+    *ptr = NULL;
+    return Data_Wrap_Struct(klass, 0, Free, ptr);
   }
-  return ary;
-}
-// Int64QuantileEstimatorg end
-
-// TopEstimator start
-static void
-rb_TopEstimator_Free(SZaru::TopEstimator<double> **ptr)
-{
-  if (*ptr) {
-    delete *ptr;
+  
+  static VALUE
+  Initialize(VALUE self, VALUE maxElems)
+  {
+    SZaru::QuantileEstimator<Value> **ptr;
+    Data_Get_Struct(self, SZaru::QuantileEstimator<Value>*, ptr);
+    *ptr = SZaru::QuantileEstimator<Value>::Create(NUM2LONG(maxElems));
+    return Qnil;
   }
-}
-
-static VALUE
-rb_TopEstimator_Alloc(VALUE klass)
-{
-  SZaru::TopEstimator<double> **ptr = ALLOC(SZaru::TopEstimator<double>*);
-  *ptr = NULL;
-  return Data_Wrap_Struct(klass, 0, rb_TopEstimator_Free, ptr);
-}
-
-static VALUE
-rb_TopEstimator_Initialize(VALUE self, VALUE maxElems)
-{
-  SZaru::TopEstimator<double> **ptr;
-  Data_Get_Struct(self, SZaru::TopEstimator<double>*, ptr);
-  *ptr = SZaru::TopEstimatorFactory::CreateDouble(NUM2LONG(maxElems));
-  return Qnil;
-}
-
-static VALUE
-rb_TopEstimator_AddElem(VALUE self, VALUE elem)
-{
-  SZaru::TopEstimator<double> **te;
-  Check_Type(elem, T_STRING);
-  Data_Get_Struct(self, SZaru::TopEstimator<double>*, te);
-  (*te)->AddElem(std::string(RSTRING_PTR(elem), RSTRING_LEN(elem)));
-  return Qnil;
-}
-
-static VALUE
-rb_TopEstimator_Estimate(VALUE self)
-{
-  SZaru::TopEstimator<double> **te;
-  Data_Get_Struct(self, SZaru::TopEstimator<double>*, te);
-  std::vector<SZaru::TopEstimator<double>::Elem> topElems;
-  (*te)->Estimate(topElems);
-  VALUE ary = rb_ary_new2(topElems.size());
-  for (int i = 0; i < topElems.size(); i++) {
-    rb_ary_push(ary, rb_ary_new3(2, 
-				 rb_str_new(topElems[i].value.c_str(), topElems[i].value.size()), 
-				 rb_float_new(topElems[i].weight)));
+  
+  static VALUE
+  AddElem(VALUE self, VALUE elem)
+  {
+    SZaru::QuantileEstimator<Value> **te;
+    Check_Type(elem, T_FIXNUM);
+    Data_Get_Struct(self, SZaru::QuantileEstimator<Value>*, te);
+    (*te)->AddElem(Converter<Value>::FromRuby(elem));
+    return Qnil;
   }
-  return ary;
-  // return LONG2NUM(top);
-}
-// TopEstimator end
-
-// // TopHeap start
-// static void
-// rb_TopHeap_Free(SZaru::SzlSketch **ptr)
-// {
-//   if (*ptr) {
-//     delete *ptr;
-//   }
-// }
-
-// static VALUE
-// rb_TopHeap_Alloc(VALUE klass)
-// {
-//   SZaru::TopHeap **ptr = ALLOC(SZaru::TopHeap*);
-//   *ptr = NULL;
-//   return Data_Wrap_Struct(klass, 0, rb_TopHeap_Free, ptr);
-// }
-
-// static VALUE
-// rb_TopHeap_Initialize(VALUE self, VALUE maxElems)
-// {
-//   SZaru::TopHeap **ptr;
-//   Data_Get_Struct(self, SZaru::TopHeap*, ptr);
-//   *ptr = SZaru::TopHeap::Create(NUM2LONG(maxElems));
-//   return Qnil;
-// }
-
-// static VALUE
-// rb_TopHeap_AddNewElem(VALUE self, VALUE elem, VALUE value)
-// {
-//   SZaru::TopHeap **th;
-//   Check_Type(elem, T_STRING);
-//   Check_Type(value, T_FLOAT);;
-//   Data_Get_Struct(self, SZaru::TopHeap*, th);
-//   (*th)->AddNewElem(std::string(RSTRING_PTR(elem)), RFLOAT(value)->value);
-//   return Qnil;
-// }
-
-// static VALUE
-// rb_TopHeap_Smallest(VALUE self)
-// {
-//   SZaru::TopHeap **th;
-//   Data_Get_Struct(self, SZaru::TopHeap*, th);
-//   SZaru::TopHeap::Elem* elem = (*th)->Smallest();
-//   return rb_ary_new3(2, rb_str_new(elem->value.c_str(), elem->value.size()), rb_float_new(elem->weight));
-// }
-// TopHeap end
-
-// UniqueEstimator
-static void
-rb_UniqueEstimator_Free(SZaru::UniqueEstimator **ptr)
-{
-  if (*ptr) {
-    delete *ptr;
+  
+  static VALUE
+  Estimate(VALUE self)
+  {
+    SZaru::QuantileEstimator<Value> **te;
+    Data_Get_Struct(self, SZaru::QuantileEstimator<Value>*, te);
+    std::vector<Value> quantiles;
+    (*te)->Estimate(quantiles);
+    VALUE ary = rb_ary_new2(quantiles.size());
+    for (int i = 0; i < quantiles.size(); i++) {
+      rb_ary_push(ary, Converter<Value>::ToRuby(quantiles[i]));
+    }
+    return ary;
   }
-}
 
-static VALUE
-rb_UniqueEstimator_Alloc(VALUE klass)
-{
-  SZaru::UniqueEstimator **ptr = ALLOC(SZaru::UniqueEstimator*);
-  *ptr = NULL;
-  return Data_Wrap_Struct(klass, 0, rb_UniqueEstimator_Free, ptr);
-}
+public:
 
-static VALUE
-rb_UniqueEstimator_Initialize(VALUE self, VALUE maxElems)
-{
-  SZaru::UniqueEstimator **ptr;
-  Data_Get_Struct(self, SZaru::UniqueEstimator*, ptr);
-  *ptr = SZaru::UniqueEstimator::Create(NUM2LONG(maxElems));
-  return Qnil;
-}
+  static VALUE 
+  Define(VALUE superModule, const char *name)
+  {
+    VALUE cQuantileEstimator = rb_define_class_under(superModule, name, rb_cObject);
+    rb_define_alloc_func(cQuantileEstimator, Alloc);
+    rb_define_private_method(cQuantileEstimator, "initialize", 
+			     RUBY_METHOD_FUNC(Initialize), 1);
+    rb_define_method(cQuantileEstimator, "add_elem", 
+		     RUBY_METHOD_FUNC(AddElem), 1);
+    rb_define_method(cQuantileEstimator, "estimate", 
+		     RUBY_METHOD_FUNC(Estimate), 0);
+    return cQuantileEstimator;
+  }
+};
 
-static VALUE
-rb_UniqueEstimator_AddElem(VALUE self, VALUE elem)
-{
-  SZaru::UniqueEstimator **ue;
-  Check_Type(elem, T_STRING);
-  Data_Get_Struct(self, SZaru::UniqueEstimator*, ue);
-  (*ue)->AddElemInCIF(RSTRING_PTR(elem), RSTRING_LEN(elem));
-  return Qnil;
-}
 
-static VALUE
-rb_UniqueEstimator_Estimate(VALUE self)
-{
-  SZaru::UniqueEstimator **ue;
-  Data_Get_Struct(self, SZaru::UniqueEstimator*, ue);
-  uint64_t unique = (*ue)->Estimate();
-  return LONG2NUM(unique);
-}
+template< typename Value >
+class RubyTopEstimator {
+private:
+
+  static void
+  Free(SZaru::TopEstimator<Value> **ptr)
+  {
+    if (*ptr) {
+      delete *ptr;
+    }
+  }
+  
+  static VALUE
+  Alloc(VALUE klass)
+  {
+    SZaru::TopEstimator<Value> **ptr = ALLOC(SZaru::TopEstimator<Value>*);
+    *ptr = NULL;
+    return Data_Wrap_Struct(klass, 0, Free, ptr);
+  }
+
+  static VALUE
+  Initialize(VALUE self, VALUE maxElems)
+  {
+    SZaru::TopEstimator<Value> **ptr;
+    Check_Type(maxElems, T_FIXNUM);
+    Data_Get_Struct(self, SZaru::TopEstimator<Value>*, ptr);
+    *ptr = SZaru::TopEstimator<Value>::Create(NUM2LONG(maxElems));
+    return Qnil;
+  }
+  
+  static VALUE
+  AddElem(VALUE self, VALUE elem)
+  {
+    SZaru::TopEstimator<Value> **te;
+    Check_Type(elem, T_STRING);
+    Data_Get_Struct(self, SZaru::TopEstimator<Value>*, te);
+    (*te)->AddElem(std::string(RSTRING_PTR(elem), RSTRING_LEN(elem)));
+    return Qnil;
+  }
+  
+  static VALUE
+  Estimate(VALUE self)
+  {
+    SZaru::TopEstimator<Value> **te;
+    Data_Get_Struct(self, SZaru::TopEstimator<Value>*, te);
+    std::vector<typename SZaru::TopEstimator<Value>::Elem> topElems;
+    (*te)->Estimate(topElems);
+    VALUE ary = rb_ary_new2(topElems.size());
+    for (int i = 0; i < topElems.size(); i++) {
+      rb_ary_push(ary, rb_ary_new3(2, 
+				   rb_str_new(topElems[i].value.c_str(), topElems[i].value.size()), 
+				   Converter<Value>::ToRuby(topElems[i].weight)));
+    }
+    return ary;
+    // return LONG2NUM(top);
+  }
+
+public:
+  static VALUE 
+  Define(VALUE superModule, const char *name)
+  {
+    VALUE cTopEstimator = rb_define_class_under(superModule, name, rb_cObject);
+    rb_define_alloc_func(cTopEstimator, Alloc);
+    rb_define_private_method(cTopEstimator, "initialize", 
+			     RUBY_METHOD_FUNC(Initialize), 1);
+    rb_define_method(cTopEstimator, "add_elem", 
+		     RUBY_METHOD_FUNC(AddElem), 1);
+    rb_define_method(cTopEstimator, "estimate", 
+		     RUBY_METHOD_FUNC(Estimate), 0);
+    return cTopEstimator;
+  }
+
+};
+
+
+class RubyUniqueEstimator {
+private:
+  static void
+  Free(SZaru::UniqueEstimator **ptr)
+  {
+    if (*ptr) {
+      delete *ptr;
+    }
+  }
+  
+  static VALUE
+  Alloc(VALUE klass)
+  {
+    SZaru::UniqueEstimator **ptr = ALLOC(SZaru::UniqueEstimator*);
+    *ptr = NULL;
+    return Data_Wrap_Struct(klass, 0, Free, ptr);
+  }
+  
+  static VALUE
+  Initialize(VALUE self, VALUE maxElems)
+  {
+    SZaru::UniqueEstimator **ptr;
+    Data_Get_Struct(self, SZaru::UniqueEstimator*, ptr);
+    *ptr = SZaru::UniqueEstimator::Create(NUM2LONG(maxElems));
+    return Qnil;
+  }
+  
+  static VALUE
+  AddElem(VALUE self, VALUE elem)
+  {
+    SZaru::UniqueEstimator **ue;
+    Check_Type(elem, T_STRING);
+    Data_Get_Struct(self, SZaru::UniqueEstimator*, ue);
+    (*ue)->AddElemInCIF(RSTRING_PTR(elem), RSTRING_LEN(elem));
+    return Qnil;
+  }
+  
+  static VALUE
+  Estimate(VALUE self)
+  {
+    SZaru::UniqueEstimator **ue;
+    Data_Get_Struct(self, SZaru::UniqueEstimator*, ue);
+    uint64_t unique = (*ue)->Estimate();
+    return LONG2NUM(unique);
+  }
+
+public:
+  static VALUE
+  Define(VALUE superModule, const char *name) {
+    VALUE cUniqueEstimator = rb_define_class_under(superModule, name, rb_cObject);
+    rb_define_alloc_func(cUniqueEstimator, Alloc);
+    rb_define_private_method(cUniqueEstimator, "initialize", 
+			     RUBY_METHOD_FUNC(Initialize), 1);
+    rb_define_method(cUniqueEstimator, "add_elem", 
+		     RUBY_METHOD_FUNC(AddElem), 1);
+    rb_define_method(cUniqueEstimator, "estimate", 
+		     RUBY_METHOD_FUNC(Estimate), 0);  
+    return cUniqueEstimator;
+  }
+};
 
 void
 Init_szaru(void){
   VALUE mSZaru = rb_define_module("SZaru");
   // UniqueEstimator
-  VALUE cUniqueEstimator = rb_define_class_under(mSZaru, "UniqueEstimator", rb_cObject);
-  rb_define_alloc_func(cUniqueEstimator, rb_UniqueEstimator_Alloc);
-  rb_define_private_method(cUniqueEstimator, "initialize", 
-			   RUBY_METHOD_FUNC(rb_UniqueEstimator_Initialize), 1);
-  rb_define_method(cUniqueEstimator, "add_elem", 
-		   RUBY_METHOD_FUNC(rb_UniqueEstimator_AddElem), 1);
-  rb_define_method(cUniqueEstimator, "estimate", 
-		   RUBY_METHOD_FUNC(rb_UniqueEstimator_Estimate), 0);
+  RubyUniqueEstimator::Define(mSZaru, "UniqueEstimator");
 
   // TopEstimator
-  VALUE cTopEstimator = rb_define_class_under(mSZaru, "TopEstimator", rb_cObject);
-  rb_define_alloc_func(cTopEstimator, rb_TopEstimator_Alloc);
-  rb_define_private_method(cTopEstimator, "initialize", 
-			   RUBY_METHOD_FUNC(rb_TopEstimator_Initialize), 1);
-  rb_define_method(cTopEstimator, "add_elem", 
-		   RUBY_METHOD_FUNC(rb_TopEstimator_AddElem), 1);
-  rb_define_method(cTopEstimator, "estimate", 
-		   RUBY_METHOD_FUNC(rb_TopEstimator_Estimate), 0);
-
-  // Int64QuantileEstimator
-  VALUE cInt64QuantileEstimator = rb_define_class_under(mSZaru, "Int64QuantileEstimator", rb_cObject);
-  rb_define_alloc_func(cInt64QuantileEstimator, rb_Int64QuantileEstimator_Alloc);
-  rb_define_private_method(cInt64QuantileEstimator, "initialize", 
-			   RUBY_METHOD_FUNC(rb_Int64QuantileEstimator_Initialize), 1);
-  rb_define_method(cInt64QuantileEstimator, "add_elem", 
-		   RUBY_METHOD_FUNC(rb_Int64QuantileEstimator_AddElem), 1);
-  rb_define_method(cInt64QuantileEstimator, "estimate", 
-		   RUBY_METHOD_FUNC(rb_Int64QuantileEstimator_Estimate), 0);
-
-  // TopHeap
-  // VALUE cTopHeap = rb_define_class_under(mSZaru, "TopHeap", rb_cObject);
-//   rb_define_alloc_func(cTopHeap, rb_TopHeap_Alloc);
-//   rb_define_private_method(cTopHeap, "initialize", 
-// 			   RUBY_METHOD_FUNC(rb_TopHeap_Initialize), 1);
-//   rb_define_method(cTopHeap, "add_new_elem", 
-// 		   RUBY_METHOD_FUNC(rb_TopHeap_AddNewElem), 2);
-//   rb_define_method(cTopHeap, "smallest", 
-// 		   RUBY_METHOD_FUNC(rb_TopHeap_Smallest), 0);
-
-  // Sketch
-  // VALUE cSketch = rb_define_class_under(mSZaru, "Sketch", rb_cObject);
-//   rb_define_alloc_func(cSketch, rb_Sketch_Alloc);
-//   rb_define_private_method(cSketch, "initialize", 
-// 			   RUBY_METHOD_FUNC(rb_Sketch_Initialize), 1);
-  // rb_define_method(cSketch, "add_new_elem", 
-  // RUBY_METHOD_FUNC(rb_Sketch_AddNewElem), 2);
-  // rb_define_method(cSketch, "smallest", 
-  //		   RUBY_METHOD_FUNC(rb_Sketch_Smallest), 0);
+  VALUE mTopEstimator = rb_define_module_under(mSZaru, "TopEstimator");
+  RubyTopEstimator<double>::Define(mTopEstimator, "Double");
+  RubyTopEstimator<int32_t>::Define(mTopEstimator, "Int32");
+  RubyTopEstimator<int64_t>::Define(mTopEstimator, "Int64");
+  
+  // QuantileEstimator
+  VALUE mQuantileEstimator = rb_define_module_under(mSZaru, "QuantileEstimator");
+  RubyQuantileEstimator<double>::Define(mQuantileEstimator, "Double");
+  RubyQuantileEstimator<int32_t>::Define(mQuantileEstimator, "Int32");
+  RubyQuantileEstimator<int64_t>::Define(mQuantileEstimator, "Int64");
+  
 }

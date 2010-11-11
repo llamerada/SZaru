@@ -27,7 +27,7 @@ def test_sketch
 end
 
 def test_top
-  te = SZaru::TopEstimator.new(10)
+  te = SZaru::TopEstimator::Int32.new(10)
   ary = []
   100.times do |i|
     i.times do |j|
@@ -41,7 +41,7 @@ def test_top
 end
 
 def test_quantile
-  te = SZaru::Int64QuantileEstimator.new(10)
+  te = SZaru::QuantileEstimator::Int64.new(10)
   ary = []
   1000.times do |i|
     # i.times do |j|
@@ -60,5 +60,6 @@ end
 
 # test_topheap
 # test_sketch
+test_unique
 test_top
-# test_quantile
+test_quantile
