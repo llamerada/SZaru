@@ -3,7 +3,7 @@ def build(bld):
   emitters/szlunique.cc
   emitters/top.cc
   emitters/quantile.cc
-  public/hashutils.cc
+  utilities/hashutils.cc
   """
   
   bld(source = source_files,
