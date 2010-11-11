@@ -24,6 +24,8 @@ extern "C" {
   void Init_szaru(void);
 }
 
+namespace {
+
 template<typename Value>
 class RubyQuantileEstimator {
 private:
@@ -242,6 +244,8 @@ public:
     return cUniqueEstimator;
   }
 };
+
+}
 
 void
 Init_szaru(void){
