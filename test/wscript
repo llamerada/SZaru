@@ -1,7 +1,8 @@
 def build(bld):
   bld.program(features = 'cxx',
-      source       = 'uniqueTest.cpp',
-      target       = 'uniqueTest',
-      install_path  = None,
-      includes     = '. ../src',
-      use = 'szaru')
+              source       = 'uniqueTest.cpp',
+              target       = 'uniqueTest',
+              install_path  = None,
+              includes     = '. ../src',
+              lib = 'ssl',
+              use = 'szaru')

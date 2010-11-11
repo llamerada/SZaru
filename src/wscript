@@ -1,12 +1,55 @@
 def build(bld):
-  bld(source = """
+  source_files = """
   emitters/szlunique.cc
   emitters/top.cc
   emitters/quantile.cc
   public/hashutils.cc
-  """,
+  """
+  
+  bld(source = source_files,
       features ='cxx cxxshlib',
       name     = 'szaru',
       target   = 'szaru',
       lib = 'ssl',
       includes     = '.')
+
+  bld(source = source_files,
+      features ='cxx cxxstlib',
+      name     = 'szaru',
+      target   = 'szaru',
+      lib = 'ssl',
+      includes     = '.')
+
+  bld.install_files('${PREFIX}/include', "szaru.h")
+ 
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
