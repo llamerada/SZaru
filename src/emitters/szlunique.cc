@@ -33,7 +33,7 @@
 #include <vector>
 
 #include "public/porting.h"
-#include "public/logging.h"
+// #include "public/logging.h"
 #include "public/hashutils.h"
 #include "public/hash_set.h"
 

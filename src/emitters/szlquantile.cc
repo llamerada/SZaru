@@ -56,7 +56,7 @@
 #include <algorithm>
 
 #include "public/porting.h"
-#include "public/logging.h"
+// #include "public/logging.h"
 
 namespace SZaru {
 // We compute the "smallest possible k" satisfying two inequalities:

@@ -1,4 +1,5 @@
 // Copyright 2010 Google Inc.
+// Modified by Yuji Kaneda
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,7 +25,7 @@
 #include "public/hash_map.h"
 
 #include "public/porting.h"
-#include "public/logging.h"
+// #include "public/logging.h"
 #include "public/hashutils.h"
 
 
