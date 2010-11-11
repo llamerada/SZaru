@@ -57,20 +57,20 @@ private:
   static VALUE
   AddElem(VALUE self, VALUE elem)
   {
-    SZaru::QuantileEstimator<Value> **te;
+    SZaru::QuantileEstimator<Value> **qe;
     Check_Type(elem, T_FIXNUM);
-    Data_Get_Struct(self, SZaru::QuantileEstimator<Value>*, te);
-    (*te)->AddElem(Converter<Value>::FromRuby(elem));
+    Data_Get_Struct(self, SZaru::QuantileEstimator<Value>*, qe);
+    (*qe)->AddElem(Converter<Value>::FromRuby(elem));
     return Qnil;
   }
   
   static VALUE
   Estimate(VALUE self)
   {
-    SZaru::QuantileEstimator<Value> **te;
-    Data_Get_Struct(self, SZaru::QuantileEstimator<Value>*, te);
+    SZaru::QuantileEstimator<Value> **qe;
+    Data_Get_Struct(self, SZaru::QuantileEstimator<Value>*, qe);
     std::vector<Value> quantiles;
-    (*te)->Estimate(quantiles);
+    (*qe)->Estimaqe(quantiles);
     VALUE ary = rb_ary_new2(quantiles.size());
     for (int i = 0; i < quantiles.size(); i++) {
       rb_ary_push(ary, Converter<Value>::ToRuby(quantiles[i]));
@@ -247,6 +247,9 @@ public:
 
 }
 
+/**
+ * Entry point of the library.
+ */
 void
 Init_szaru(void){
   VALUE mSZaru = rb_define_module("SZaru");
