@@ -17,19 +17,23 @@
 
 namespace SZaru {
 
-QuantileEstimator<double>* 
-QuantileEstimatorFactory::CreateDouble(uint32_t numQuantiles){
-  return new QuantileEstimatorImpl<double>(numQuantiles);
-}
 
+template <>
 QuantileEstimator<int32_t>* 
-QuantileEstimatorFactory::CreateInt32(uint32_t numQuantiles){
+QuantileEstimator<int32_t>::Create(uint32_t numQuantiles) {
   return new QuantileEstimatorImpl<int32_t>(numQuantiles);
 }
 
+template <>
 QuantileEstimator<int64_t>* 
-QuantileEstimatorFactory::CreateInt64(uint32_t numQuantiles){
+QuantileEstimator<int64_t>::Create(uint32_t numQuantiles) {
   return new QuantileEstimatorImpl<int64_t>(numQuantiles);
+}
+
+template <>
+QuantileEstimator<double>* 
+QuantileEstimator<double>::Create(uint32_t numQuantiles) {
+  return new QuantileEstimatorImpl<double>(numQuantiles);
 }
 
 }

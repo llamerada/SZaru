@@ -1,5 +1,5 @@
 require "mkmf"
-$CFLAGS = "-I../src/emitters -L../build/src"
+$CFLAGS = "-I../src -L../build/src"
 $LDFLAGS = "-L../build/src"
 dir_config('szaru')
 if have_library('szaru')

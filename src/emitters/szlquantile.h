@@ -18,7 +18,7 @@
 #include <string>
 #include <vector>
 
-#include "emitters/quantile.h"
+#include "szaru.h"
 
 using namespace std;
 // Structure for storing approx quantiles for each key in the table.

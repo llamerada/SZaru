@@ -38,7 +38,7 @@
 #include "emitters/szltopheap.h"
 #include "emitters/szlsketch.h"
 
-#include "emitters/top.h"
+#include "szaru.h"
 
 namespace SZaru {
 

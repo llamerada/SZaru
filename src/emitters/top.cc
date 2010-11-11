@@ -17,19 +17,22 @@
 
 namespace SZaru {
 
-TopEstimator<double>* 
-TopEstimatorFactory::CreateDouble(uint32_t numTops){
-  return new TopEstimatorImpl<double>(numTops);
-}
-
+template <>
 TopEstimator<int32_t>* 
-TopEstimatorFactory::CreateInt32(uint32_t numTops){
+TopEstimator<int32_t>::Create(uint32_t numTops) {
   return new TopEstimatorImpl<int32_t>(numTops);
 }
 
+template <>
 TopEstimator<int64_t>* 
-TopEstimatorFactory::CreateInt64(uint32_t numTops){
+TopEstimator<int64_t>::Create(uint32_t numTops) {
   return new TopEstimatorImpl<int64_t>(numTops);
+}
+
+template <>
+TopEstimator<double>* 
+TopEstimator<double>::Create(uint32_t numTops) {
+  return new TopEstimatorImpl<double>(numTops);
 }
 
 }

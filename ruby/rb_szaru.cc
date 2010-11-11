@@ -1,8 +1,5 @@
 #include "ruby.h"
-#include "unique.h"
-#include "top.h"
-#include "quantile.h"
-
+#include "szaru.h"
 // local include files
 #include "converter.h"
 

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string>
 
-#include "unique.h"
+#include "szaru.h"
 
 void testSimple(){
   SZaru::UniqueEstimator *uniqueEstimator = 

@@ -37,7 +37,7 @@
 #include "public/hashutils.h"
 #include "public/hash_set.h"
 
-#include "unique.h"
+#include "szaru.h"
 
 namespace SZaru {
 
