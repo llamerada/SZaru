@@ -177,8 +177,8 @@ public:
   static bool Define(PyObject *superModule, const char* name) {
     // is it necessary using static ?
     static PyTypeObject tTopEst = CreatePyTypeObject();   
-    tTopEst.tp_name = (std::string("szaru.TopEstimator") + Converter<Value>::Name()).c_str();
-    tTopEst.tp_basicsize = sizeof(PyData);
+    const char* tp_name = (std::string("szaru.TopEstimator") + Converter<Value>::Name()).c_str();
+    tTopEst.tp_name = strdup(tp_name); // alloc memory
     tTopEst.tp_itemsize = 0;
     tTopEst.tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE;
     tTopEst.tp_doc = "Statistical samplings that record the 'top N' data items.";
@@ -266,8 +266,9 @@ public:
 
   static bool Define(PyObject *superModule, const char* name) {
     // is it necessary using static ?
-    static PyTypeObject tQuantileEst = CreatePyTypeObject();   
-    tQuantileEst.tp_name = (std::string("szaru.QuantileEstimator") + Converter<Key>::Name()).c_str();
+    static PyTypeObject tQuantileEst = CreatePyTypeObject();
+    const char* tp_name = (std::string("szaru.QuantileEstimator") + Converter<Key>::Name()).c_str();
+    tQuantileEst.tp_name = strdup(tp_name); // alloc memory
     tQuantileEst.tp_basicsize = sizeof(PyData);
     tQuantileEst.tp_itemsize = 0;
     tQuantileEst.tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE;
@@ -310,7 +311,7 @@ PyMODINIT_FUNC initszaru(void)
   PyModule_AddStringConstant(mSZaru, "VERSION", SZaru::VERSION);
 
   PythonUniqueEstimator::Define(mSZaru, "UniqueEstimator");
-  
+
   PythonTopEstimator<int32_t>::Define(mSZaru, "TopEstimatorInt32");
   PythonTopEstimator<int64_t>::Define(mSZaru, "TopEstimatorInt64");
   PythonTopEstimator<double>::Define(mSZaru, "TopEstimatorDouble");
