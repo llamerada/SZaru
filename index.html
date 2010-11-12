@@ -2,37 +2,29 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>Portings of excellent Sawzall aggregators. </title>
+    <title>Porting of excellent Sawzall aggregators. </title>
   </head>
   <body>
-    <h1>SZaru: Portings of excellent <a href="http://code.google.com/p/szl/">Sawzall</a> aggregators. </h1>
-    <div><!-- hhmts start -->Last modified: Fri Nov 12 14:43:53 JST 2010 <!-- hhmts end --></div>
+    <h1>SZaru: Porting of excellent <a href="http://code.google.com/p/szl/">Sawzall</a> aggregators. </h1>
+    <div><!-- hhmts start -->Last modified: Fri Nov 12 15:44:58 JST 2010 <!-- hhmts end --></div>
 
     <hr />
 
-    <h2>Overview</h2>
-
-    <h2>Synopisis</h2>
-
-    <p>C++
-    <pre>
-#include <iostream>
-#include <szaru.h>
-
-TopEstimator<int32_t> *topEst = TopEstimator<int32_t>::Create(3);
-topEst->AddWeightedElem(string("abc"), 1);
-topEst->AddWeightedElem(string("def"), 2);
-topEst->AddWeightedElem(string("ghi"), 3);                                                                
-topEst->AddWeightedElem(string("def"), 4);
-topEst->AddWeightedElem(string("jkl"), 5);
-vector< TopEstimator<int32_t>::Elem > topElems;
-topEst->Estimate(topElems);
-cout << topElems[0].value << ", " << topElems[0].weight << endl; // => def, 6
-cout << topElems[1].value << ", " << topElems[1].weight << endl; // => jkl, 5
-cout << topElems[2].value << ", " << topElems[2].weight << endl; // => ghi, 3
-delete topEst;   
-    </pre>
+    <h2 id="overview">Overview</h2>
+    <p>
+      SZaru is a libray to use <a href="http://code.google.com/p/szl/">Sawzall</a> aggregators 
+      in pure C++, Ruby and Python.
+      Currently, I have implemented 3 aggregators (unique, top, quantile).
     </p>
+
+    <h2 id="example">Example</h2>
+
+    <h4>C++</h4>
+    <script src="https://gist.github.com/673807.js"> </script>
+    <h4>Ruby</h4>
+    <script src="https://gist.github.com/673810.js"> </script>
+    <h4>Python</h4>
+    <script src="https://gist.github.com/673812.js"> </script>
   </body>
 </html>
 
