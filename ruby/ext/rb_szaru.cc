@@ -247,13 +247,10 @@ public:
 
 }
 
-/**
- * Entry point of the library.
- */
+
 void
 Init_szaru(void){
   VALUE mSZaru = rb_define_module("SZaru");
-  // UniqueEstimator
   RubyUniqueEstimator::Define(mSZaru, "UniqueEstimator");
 
   // TopEstimator
