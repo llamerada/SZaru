@@ -1,3 +1,6 @@
+#! /usr/bin/env python
+# encoding: utf-8
+
 def build(bld):
   source_files = """
   emitters/szlunique.cc
@@ -10,7 +13,7 @@ def build(bld):
       features ='cxx cxxshlib',
       name     = 'szaru',
       target   = 'szaru',
-      lib = 'ssl',
+      lib = 'crypto',
       includes     = '.')
 
   bld(source = source_files,
