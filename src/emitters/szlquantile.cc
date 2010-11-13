@@ -373,6 +373,7 @@ void QuantileEstimatorImpl<Key>::Estimate(vector<Key>& output) {
   output.clear();
   if (tot_elems_ == 0) {
     output.push_back(Key());
+    return;
   }
   // We display the quantiles, not the raw output.
   ComputeQuantiles<Key>(buffer_, min_, max_, num_quantiles_, tot_elems_, &output);
