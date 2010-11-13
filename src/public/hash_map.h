@@ -1,5 +1,4 @@
 // Copyright 2010 Google Inc.
-// Modified by Yuji Kaneda
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,19 +19,7 @@
 #ifndef _UTILITIES_HASH_MAP_
 #define _UTILITIES_HASH_MAP_
 
-//#include "config.h"
-
-/* the name of <hash_set> */
-#define HASH_MAP_CLASS unordered_map
-
-/* the location of <hash_map> */
-#define HASH_MAP_H <tr1/unordered_map>
-
-/* the namespace of hash_map/hash_set */
-#define HASH_NAMESPACE std::tr1
-
-/* define if the compiler has hash_map */
-#define HAVE_HASH_MAP 1
+#include "config.h"
 
 #ifdef HASH_MAP_H
 #include HASH_MAP_H

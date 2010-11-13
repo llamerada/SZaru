@@ -14,14 +14,14 @@ def build(bld):
       name     = 'szaru',
       target   = 'szaru',
       lib = 'crypto',
-      includes     = '.')
+      includes     = '. ../build')
 
   bld(source = source_files,
       features ='cxx cxxstlib',
       name     = 'szaru',
       target   = 'szaru',
-      lib = 'ssl',
-      includes     = '.')
+      lib = 'crypto',
+      includes     = '. ../build')
 
   bld.install_files('${PREFIX}/include', "szaru.h")
  

@@ -28,14 +28,14 @@ def define_config(conf, location, namespace, name):
   hash_namespece = namespace
   hash_map_class = name
   hash_set_header = hash_map_header.replace("map", "set")
-  hash_set_class = hash_map_header.replace("map", "set")
+  hash_set_class = hash_map_class.replace("map", "set")
   conf.define("HAVE_HASH_MAP", 1) 
   conf.define("HAVE_HASH_SET", 1)
   conf.define("HASH_MAP_H", hash_map_header, quote=False)
   conf.define("HASH_SET_H", hash_set_header, quote=False)
   conf.define("HASH_MAP_CLASS", hash_map_class, quote=False)
   conf.define("HASH_SET_CLASS", hash_set_class, quote=False)
-  conf.define("HASH_NAMESPECE", hash_namespece, quote=False)
+  conf.define("HASH_NAMESPACE", hash_namespece, quote=False)
   conf.end_msg(hash_map_header)
 
 
