@@ -10,6 +10,17 @@ out = 'build'
 def options(opt):
   opt.load('compiler_cxx')
 
+def configure(conf):
+  conf.load('compiler_cxx')
+  
+  conf.check_cxx(lib = 'crypto', cxxflags = ['-O2', '-Wall', '-g'])
+  check_hash(conf)
+  
+  conf.write_config_header('config.h')
+
+def build(bld):
+  bld.recurse('src test')
+
 
 # check hash_set / hash_map bsed on szl/m4/slt_hash.m4
 def check_hash(conf):
@@ -65,15 +76,4 @@ def check_hash_snippet(conf, location, namespace, name):
   return ret
 
 
-def configure(conf):
-  conf.load('compiler_cxx')
-  
-  # conf.env.CXXFLAGS += ['-O2', '-Wall', '-g']
-  conf.check_cxx(lib = 'crypto', cxxflags = ['-O2', '-Wall', '-g'])
-  check_hash(conf)
 
-  
-  conf.write_config_header('config.h')
-
-def build(bld):
-  bld.recurse('src test')
