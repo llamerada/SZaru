@@ -3,18 +3,46 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>Porting of excellent Sawzall aggregators. </title>
+    <link href="szaru.css" rel="stylesheet" type="text/css" /> 
   </head>
   <body>
     <h1>SZaru: Porting of excellent <a href="http://code.google.com/p/szl/">Sawzall</a> aggregators. </h1>
-    <div><!-- hhmts start -->Last modified: Fri Nov 12 15:44:58 JST 2010 <!-- hhmts end --></div>
+    <div><!-- hhmts start -->Last modified: Sat Nov 13 12:20:05 JST 2010 <!-- hhmts end --></div>
 
+    <hr />
+    <ul>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#example">Example</a></li>
+      <li><a href="#install">Install</a></li>
+    </ul>
     <hr />
 
     <h2 id="overview">Overview</h2>
     <p>
-      SZaru is a libray to use <a href="http://code.google.com/p/szl/">Sawzall</a> aggregators 
+      SZaru is a library to use <a href="http://code.google.com/p/szl/">Sawzall</a> aggregators 
       in pure C++, Ruby and Python.
-      Currently, I have implemented 3 aggregators (unique, top, quantile).
+      Currently, I have implemented the following 3 aggregators:
+      <dl>
+	<dt>Top</dt>
+	<dd>
+	  Statistical samplings that record the 'top N' data items
+	  based on CountSketch algorithm from "Finding Frequent Items in Data Streams",
+	  Moses Charikar, Kevin Chen and Martin Farach-Colton, 2002.
+	</dd>
+
+	<dt>Unique</dt>
+	<dd>
+	  Statistical estimators for the total number of unique data items.
+	</dd>
+
+	<dt>Quantile</dt>
+	<dd>
+	  Approximate N-tiles for data items from an ordered domain based on 
+	  the following paper:
+	  Munro &amp; Paterson, "Selection and Sorting with Limited Storage",
+          Theoretical Computer Science, Vol 12, p 315-323, 1980.
+	</dd>
+      </dl>
     </p>
 
     <h2 id="example">Example</h2>
@@ -25,7 +53,16 @@
     <script src="https://gist.github.com/673810.js"> </script>
     <h4>Python</h4>
     <script src="https://gist.github.com/673812.js"> </script>
-  </body>
+    
+    <h2 id="install">Install</h2>
+    <h4>Core library</h4>
+    <pre>git clone git://github.com/llamerada/SZaru.git
+cd SZaru
+./waf configure
+./waf 
+sudo ./waf install
+    </pre>
+</body>
 </html>
 
 
