@@ -1,4 +1,10 @@
-require File.join(File.dirname(__FILE__), "../ext/szaru")
+begin
+  require "rubygems"
+  require "szaru"
+rescue
+  puts "load local library"
+  require File.join(File.dirname(__FILE__), "../ext/szaru")
+end
 
 def test_unique
   ue = SZaru::UniqueEstimator.new(10)
