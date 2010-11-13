@@ -16,16 +16,19 @@ def test_top():
     print te.estimate()
 
 def test_quantile():
-    qtl_est = szaru.QuantileEstimatorInt32(10)
-    lst = range(100)
+    qtl_est = szaru.QuantileEstimatorInt32(11)
+    
+    lst = range(1001)
     random.shuffle(lst)
     for i in lst:
         qtl_est.add_elem(i)
+        
     print qtl_est.estimate()
 
 test_unique()
 test_top()
 test_quantile()
+
 
     
 

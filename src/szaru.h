@@ -22,6 +22,9 @@
 
 namespace SZaru{
   
+const char* const VERSION = "0.1.0";
+
+// Statistical estimators for the total number of unique data items.
 class UniqueEstimator {
 public:
   // factory method
@@ -46,6 +49,7 @@ protected:
   UniqueEstimator() {}
 };
 
+// Statistical samplings that record the 'top N' data items.
 template<typename Value>
 class TopEstimator {
 public:
@@ -63,7 +67,7 @@ public:
   // Add a new element to this entry.
   virtual void AddElem(const std::string& elm) = 0;
 
-  // Add a new element  with weight to this entry.
+  // Add a new element with weight to this entry.
   virtual void AddWeightedElem(const std::string& elem, Value weight) = 0;
   
   // Estimate the number of top entries.
@@ -88,7 +92,7 @@ template <>
 TopEstimator<double>* 
 TopEstimator<double>::Create(uint32_t numTops);
 
-// Note; only double, int32_t, int64_t 
+// Approximate N-tiles for data items from an ordered domain.
 template <typename Key>
 class QuantileEstimator {
 public:

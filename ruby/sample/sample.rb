@@ -1,12 +1,9 @@
 require File.join(File.dirname(__FILE__), "../ext/szaru")
 
 def test_unique
-  ue = SZaru::UniqueEstimator.new(4)
+  ue = SZaru::UniqueEstimator.new(10)
   1000.times do |i|
     ue.add_elem(i.to_s + "test")
-  end
-  1000.times do |i|
-    ue.add_elem(i.to_s + "hoge")
   end
   puts ue.estimate
 end
@@ -61,3 +58,5 @@ test_unique
 test_top
 test_top2
 test_quantile
+
+
