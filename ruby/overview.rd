@@ -1,7 +1,7 @@
 = Ruby Binding of SZaru
 
 == Introduction
-SZaru is a library to use {Sawzall}[http://code.google.com/p/szl/] aggregators in pure C++, Ruby and Python.
+{SZaru}[http://llamerada.github.com/SZaru/] is a library to use {Sawzall}[http://code.google.com/p/szl/] aggregators in pure C++, Ruby and Python.
 Currently, I have implemented the following 3 aggregators:
 [Top] Statistical samplings that record the 'top N' data items based on CountSketch algorithm from "Finding Frequent Items in Data Streams", Moses Charikar, Kevin Chen and Martin Farach-Colton, 2002.
 [Unique] Statistical estimators for the total number of unique data items.

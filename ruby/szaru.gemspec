@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.email = "llamerada@gmail.com"
   s.homepage = "http://llamerada.github.com/SZaru/"
   s.has_rdoc = true
-  s.rdoc_options = ["ext"]
+  s.rdoc_options = ["szaru-doc.rb"]
   s.require_paths = ["lib"]
   s.files = Dir["ext/**/*", "test/**/*", "sample/**/*", "overview.rd", "szaru-doc.rb"]
   s.test_files = Dir["test/*_spec.rb"]
