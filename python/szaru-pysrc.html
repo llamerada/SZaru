@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>szaru</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Module&nbsp;szaru
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="szaru-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="szaru-module.html">Module szaru</a></h1>
+<pre class="py-src">
+<a name="UniqueEstimator"></a><div id="UniqueEstimator-def"><a name="L1"></a><tt class="py-lineno">  1</tt> <a class="py-toggle" href="#" id="UniqueEstimator-toggle" onclick="return toggle('UniqueEstimator');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="szaru.UniqueEstimator-class.html">UniqueEstimator</a><tt class="py-op">:</tt> </tt>
+</div><div id="UniqueEstimator-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="UniqueEstimator-expanded"><a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-docstring">    Statistical estimators for the total number of unique data items.</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"> </tt>
+<a name="UniqueEstimator.__init__"></a><div id="UniqueEstimator.__init__-def"><a name="L6"></a><tt class="py-lineno">  6</tt> <a class="py-toggle" href="#" id="UniqueEstimator.__init__-toggle" onclick="return toggle('UniqueEstimator.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.UniqueEstimator-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">max_elems</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="UniqueEstimator.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="UniqueEstimator.__init__-expanded"><a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-docstring">        Create a UniqueEstimator object.</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-docstring">        @type  max_elems: number</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-docstring">        @param max_elems: Tuning parameter. If _max_elems_ is bigger,</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-docstring">        the estimation becomes more accurate but consuming more memory.</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"> </tt>
+<a name="UniqueEstimator.add_elem"></a><div id="UniqueEstimator.add_elem-def"><a name="L15"></a><tt class="py-lineno"> 15</tt> <a class="py-toggle" href="#" id="UniqueEstimator.add_elem-toggle" onclick="return toggle('UniqueEstimator.add_elem');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.UniqueEstimator-class.html#add_elem">add_elem</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">elem</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="UniqueEstimator.add_elem-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="UniqueEstimator.add_elem-expanded"><a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-docstring">        Add a new element to this entry.</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-docstring">        @type  elem: str</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"><tt class="py-docstring">        @param elem: The element to be add</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"> </tt>
+<a name="UniqueEstimator.estimate"></a><div id="UniqueEstimator.estimate-def"><a name="L23"></a><tt class="py-lineno"> 23</tt> <a class="py-toggle" href="#" id="UniqueEstimator.estimate-toggle" onclick="return toggle('UniqueEstimator.estimate');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.UniqueEstimator-class.html#estimate">estimate</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="UniqueEstimator.estimate-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="UniqueEstimator.estimate-expanded"><a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt class="py-docstring">        Return the estimation the number of unique entries.</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-docstring">        @rtype:  number</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-docstring">        @return: the number of unique entries</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div></div><a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"> </tt>
+<a name="TopEstimatorInt32"></a><div id="TopEstimatorInt32-def"><a name="L31"></a><tt class="py-lineno"> 31</tt> <a class="py-toggle" href="#" id="TopEstimatorInt32-toggle" onclick="return toggle('TopEstimatorInt32');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="szaru.TopEstimatorInt32-class.html">TopEstimatorInt32</a><tt class="py-op">:</tt> </tt>
+</div><div id="TopEstimatorInt32-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="TopEstimatorInt32-expanded"><a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt class="py-docstring">    Statistical samplings that record the 'top N' data items.</tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"><tt class="py-docstring">    TopEstimator of that weight is int32</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="TopEstimatorInt32.__init__"></a><div id="TopEstimatorInt32.__init__-def"><a name="L36"></a><tt class="py-lineno"> 36</tt> <a class="py-toggle" href="#" id="TopEstimatorInt32.__init__-toggle" onclick="return toggle('TopEstimatorInt32.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.TopEstimatorInt32-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">top_elems</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TopEstimatorInt32.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TopEstimatorInt32.__init__-expanded"><a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-docstring">        Create a TopEstimatorInt32 object.</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"><tt class="py-docstring">        @type  top_elems: number</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"><tt class="py-docstring">        @param top_elems: Number of top elements to be estimate.</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"> </tt>
+<a name="TopEstimatorInt32.add_elem"></a><div id="TopEstimatorInt32.add_elem-def"><a name="L45"></a><tt class="py-lineno"> 45</tt> <a class="py-toggle" href="#" id="TopEstimatorInt32.add_elem-toggle" onclick="return toggle('TopEstimatorInt32.add_elem');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.TopEstimatorInt32-class.html#add_elem">add_elem</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">elem</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TopEstimatorInt32.add_elem-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TopEstimatorInt32.add_elem-expanded"><a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"><tt class="py-docstring">        Add a new element to this entry.</tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"><tt class="py-docstring">        @type  elem: str</tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line"><tt class="py-docstring">        @param elem: The string element to be add</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"> </tt>
+<a name="TopEstimatorInt32.add_weighted_elem"></a><div id="TopEstimatorInt32.add_weighted_elem-def"><a name="L53"></a><tt class="py-lineno"> 53</tt> <a class="py-toggle" href="#" id="TopEstimatorInt32.add_weighted_elem-toggle" onclick="return toggle('TopEstimatorInt32.add_weighted_elem');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.TopEstimatorInt32-class.html#add_weighted_elem">add_weighted_elem</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">elem</tt><tt class="py-op">,</tt> <tt class="py-param">weight</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TopEstimatorInt32.add_weighted_elem-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TopEstimatorInt32.add_weighted_elem-expanded"><a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line"><tt class="py-docstring">        Add a new weighted element to this entry.</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"><tt class="py-docstring">        @type  elem: str</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"><tt class="py-docstring">        @param elem: The string element to be add.</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"><tt class="py-docstring">        </tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line"><tt class="py-docstring">        @type  weight: number</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"><tt class="py-docstring">        @param weight: The int weight of element.</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"> </tt>
+<a name="TopEstimatorInt32.estimate"></a><div id="TopEstimatorInt32.estimate-def"><a name="L64"></a><tt class="py-lineno"> 64</tt> <a class="py-toggle" href="#" id="TopEstimatorInt32.estimate-toggle" onclick="return toggle('TopEstimatorInt32.estimate');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.TopEstimatorInt32-class.html#estimate">estimate</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TopEstimatorInt32.estimate-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TopEstimatorInt32.estimate-expanded"><a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line"><tt class="py-docstring">        Return a top elements with weight.</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line"><tt class="py-docstring">        Example: [["abc", 7], ["def", 3]]</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line"><tt class="py-docstring">        @rtype: list</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line"><tt class="py-docstring">        @return: top elements</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div></div><a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line"> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line">     </tt>
+<a name="TopEstimatorInt64"></a><div id="TopEstimatorInt64-def"><a name="L74"></a><tt class="py-lineno"> 74</tt> <a class="py-toggle" href="#" id="TopEstimatorInt64-toggle" onclick="return toggle('TopEstimatorInt64');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="szaru.TopEstimatorInt64-class.html">TopEstimatorInt64</a><tt class="py-op">:</tt> </tt>
+</div><div id="TopEstimatorInt64-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="TopEstimatorInt64-expanded"><a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line"><tt class="py-docstring">    Statistical samplings that record the 'top N' data items.</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line"><tt class="py-docstring">    TopEstimator of that weight is int64</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="TopEstimatorInt64.__init__"></a><div id="TopEstimatorInt64.__init__-def"><a name="L79"></a><tt class="py-lineno"> 79</tt> <a class="py-toggle" href="#" id="TopEstimatorInt64.__init__-toggle" onclick="return toggle('TopEstimatorInt64.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.TopEstimatorInt64-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">top_elems</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TopEstimatorInt64.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TopEstimatorInt64.__init__-expanded"><a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line"><tt class="py-docstring">        Create a TopEstimatorInt64 object.</tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line"><tt class="py-docstring">        @type  top_elems: number</tt> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line"><tt class="py-docstring">        @param top_elems: Number of top elements to be estimate.</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line"> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line"> </tt>
+<a name="TopEstimatorInt64.add_elem"></a><div id="TopEstimatorInt64.add_elem-def"><a name="L88"></a><tt class="py-lineno"> 88</tt> <a class="py-toggle" href="#" id="TopEstimatorInt64.add_elem-toggle" onclick="return toggle('TopEstimatorInt64.add_elem');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.TopEstimatorInt64-class.html#add_elem">add_elem</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">elem</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TopEstimatorInt64.add_elem-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TopEstimatorInt64.add_elem-expanded"><a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line"><tt class="py-docstring">        Add a new element to this entry.</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line"><tt class="py-docstring">        @type  elem: str</tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line"><tt class="py-docstring">        @param elem: The string element to be add</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line"> </tt>
+<a name="TopEstimatorInt64.add_weighted_elem"></a><div id="TopEstimatorInt64.add_weighted_elem-def"><a name="L96"></a><tt class="py-lineno"> 96</tt> <a class="py-toggle" href="#" id="TopEstimatorInt64.add_weighted_elem-toggle" onclick="return toggle('TopEstimatorInt64.add_weighted_elem');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.TopEstimatorInt64-class.html#add_weighted_elem">add_weighted_elem</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">elem</tt><tt class="py-op">,</tt> <tt class="py-param">weight</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TopEstimatorInt64.add_weighted_elem-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TopEstimatorInt64.add_weighted_elem-expanded"><a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line"><tt class="py-docstring">        Add a new weighted element to this entry.</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line"><tt class="py-docstring">        @type  elem: str</tt> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line"><tt class="py-docstring">        @param elem: The string element to be add.</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line"><tt class="py-docstring">        </tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line"><tt class="py-docstring">        @type  weight: number</tt> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line"><tt class="py-docstring">        @param weight: The int weight of element.</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line"> </tt>
+<a name="TopEstimatorInt64.estimate"></a><div id="TopEstimatorInt64.estimate-def"><a name="L107"></a><tt class="py-lineno">107</tt> <a class="py-toggle" href="#" id="TopEstimatorInt64.estimate-toggle" onclick="return toggle('TopEstimatorInt64.estimate');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.TopEstimatorInt64-class.html#estimate">estimate</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TopEstimatorInt64.estimate-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TopEstimatorInt64.estimate-expanded"><a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line"><tt class="py-docstring">        Return a top elements with weight.</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line"><tt class="py-docstring">        Example: [["abc", 7], ["def", 3]]</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"><tt class="py-docstring">        @rtype: list</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line"><tt class="py-docstring">        @return: top elements</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div></div><a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line"> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line"> </tt>
+<a name="TopEstimatorDouble"></a><div id="TopEstimatorDouble-def"><a name="L117"></a><tt class="py-lineno">117</tt> <a class="py-toggle" href="#" id="TopEstimatorDouble-toggle" onclick="return toggle('TopEstimatorDouble');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="szaru.TopEstimatorDouble-class.html">TopEstimatorDouble</a><tt class="py-op">:</tt> </tt>
+</div><div id="TopEstimatorDouble-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="TopEstimatorDouble-expanded"><a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line"><tt class="py-docstring">    Statistical samplings that record the 'top N' data items.</tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line"><tt class="py-docstring">    TopEstimator of that weight is double</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="TopEstimatorDouble.__init__"></a><div id="TopEstimatorDouble.__init__-def"><a name="L122"></a><tt class="py-lineno">122</tt> <a class="py-toggle" href="#" id="TopEstimatorDouble.__init__-toggle" onclick="return toggle('TopEstimatorDouble.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.TopEstimatorDouble-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">top_elems</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TopEstimatorDouble.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TopEstimatorDouble.__init__-expanded"><a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line"><tt class="py-docstring">        Create a TopEstimatorDouble object.</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line"><tt class="py-docstring">        @type  top_elems: number</tt> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line"><tt class="py-docstring">        @param top_elems: Number of top elements to be estimate.</tt> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line"> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line"> </tt>
+<a name="TopEstimatorDouble.add_elem"></a><div id="TopEstimatorDouble.add_elem-def"><a name="L131"></a><tt class="py-lineno">131</tt> <a class="py-toggle" href="#" id="TopEstimatorDouble.add_elem-toggle" onclick="return toggle('TopEstimatorDouble.add_elem');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.TopEstimatorDouble-class.html#add_elem">add_elem</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">elem</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TopEstimatorDouble.add_elem-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TopEstimatorDouble.add_elem-expanded"><a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line"><tt class="py-docstring">        Add a new element to this entry.</tt> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line"><tt class="py-docstring">        @type  elem: str</tt> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line"><tt class="py-docstring">        @param elem: The string element to be add</tt> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line"> </tt>
+<a name="TopEstimatorDouble.add_weighted_elem"></a><div id="TopEstimatorDouble.add_weighted_elem-def"><a name="L139"></a><tt class="py-lineno">139</tt> <a class="py-toggle" href="#" id="TopEstimatorDouble.add_weighted_elem-toggle" onclick="return toggle('TopEstimatorDouble.add_weighted_elem');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.TopEstimatorDouble-class.html#add_weighted_elem">add_weighted_elem</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">elem</tt><tt class="py-op">,</tt> <tt class="py-param">weight</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TopEstimatorDouble.add_weighted_elem-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TopEstimatorDouble.add_weighted_elem-expanded"><a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line"><tt class="py-docstring">        Add a new weighted element to this entry.</tt> </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line"><tt class="py-docstring">        @type  elem: str</tt> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line"><tt class="py-docstring">        @param elem: The string element to be add.</tt> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line"><tt class="py-docstring">        </tt> </tt>
+<a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line"><tt class="py-docstring">        @type  weight: float</tt> </tt>
+<a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line"><tt class="py-docstring">        @param weight: The int weight of element.</tt> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line"> </tt>
+<a name="TopEstimatorDouble.estimate"></a><div id="TopEstimatorDouble.estimate-def"><a name="L150"></a><tt class="py-lineno">150</tt> <a class="py-toggle" href="#" id="TopEstimatorDouble.estimate-toggle" onclick="return toggle('TopEstimatorDouble.estimate');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.TopEstimatorDouble-class.html#estimate">estimate</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="TopEstimatorDouble.estimate-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="TopEstimatorDouble.estimate-expanded"><a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line"><tt class="py-docstring">        Return a top elements with weight.</tt> </tt>
+<a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line"><tt class="py-docstring">        Example: [["abc", 7.0], ["def", 3.0]]</tt> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line"><tt class="py-docstring">        @rtype: list</tt> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line"><tt class="py-docstring">        @return: top elements</tt> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div></div><a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line"> </tt>
+<a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line"> </tt>
+<a name="QuantileEstimatorInt32"></a><div id="QuantileEstimatorInt32-def"><a name="L160"></a><tt class="py-lineno">160</tt> <a class="py-toggle" href="#" id="QuantileEstimatorInt32-toggle" onclick="return toggle('QuantileEstimatorInt32');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="szaru.QuantileEstimatorInt32-class.html">QuantileEstimatorInt32</a><tt class="py-op">:</tt> </tt>
+</div><div id="QuantileEstimatorInt32-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="QuantileEstimatorInt32-expanded"><a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line"><tt class="py-docstring">    Approximate N-tiles for data items from an ordered domain.</tt> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line"><tt class="py-docstring">    QuantileEstimator of that weight is int32</tt> </tt>
+<a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="QuantileEstimatorInt32.__init__"></a><div id="QuantileEstimatorInt32.__init__-def"><a name="L165"></a><tt class="py-lineno">165</tt> <a class="py-toggle" href="#" id="QuantileEstimatorInt32.__init__-toggle" onclick="return toggle('QuantileEstimatorInt32.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.QuantileEstimatorInt32-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">quantile_elems</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="QuantileEstimatorInt32.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="QuantileEstimatorInt32.__init__-expanded"><a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line"><tt class="py-docstring">        Create a QuantileEstimatorInt32 object.</tt> </tt>
+<a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line"><tt class="py-docstring">        @type  quantile_elems: number</tt> </tt>
+<a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line"><tt class="py-docstring">        @param quantile_elems: Number of tiles to be estimate</tt> </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line"> </tt>
+<a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line"> </tt>
+<a name="QuantileEstimatorInt32.add_elem"></a><div id="QuantileEstimatorInt32.add_elem-def"><a name="L174"></a><tt class="py-lineno">174</tt> <a class="py-toggle" href="#" id="QuantileEstimatorInt32.add_elem-toggle" onclick="return toggle('QuantileEstimatorInt32.add_elem');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.QuantileEstimatorInt32-class.html#add_elem">add_elem</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">elem</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="QuantileEstimatorInt32.add_elem-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="QuantileEstimatorInt32.add_elem-expanded"><a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L176"></a><tt class="py-lineno">176</tt>  <tt class="py-line"><tt class="py-docstring">        Add a new element to this entry.</tt> </tt>
+<a name="L177"></a><tt class="py-lineno">177</tt>  <tt class="py-line"><tt class="py-docstring">        @type  elem: number</tt> </tt>
+<a name="L178"></a><tt class="py-lineno">178</tt>  <tt class="py-line"><tt class="py-docstring">        @param elem: The element to be add</tt> </tt>
+<a name="L179"></a><tt class="py-lineno">179</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L180"></a><tt class="py-lineno">180</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L181"></a><tt class="py-lineno">181</tt>  <tt class="py-line"> </tt>
+<a name="QuantileEstimatorInt32.estimate"></a><div id="QuantileEstimatorInt32.estimate-def"><a name="L182"></a><tt class="py-lineno">182</tt> <a class="py-toggle" href="#" id="QuantileEstimatorInt32.estimate-toggle" onclick="return toggle('QuantileEstimatorInt32.estimate');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.QuantileEstimatorInt32-class.html#estimate">estimate</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="QuantileEstimatorInt32.estimate-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="QuantileEstimatorInt32.estimate-expanded"><a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L184"></a><tt class="py-lineno">184</tt>  <tt class="py-line"><tt class="py-docstring">        Return a estimated N tiles.</tt> </tt>
+<a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line"><tt class="py-docstring">        Example: [0, 3, 7, 9]</tt> </tt>
+<a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line"><tt class="py-docstring">        @rtype: list</tt> </tt>
+<a name="L187"></a><tt class="py-lineno">187</tt>  <tt class="py-line"><tt class="py-docstring">        @return: n-tiles</tt> </tt>
+<a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L189"></a><tt class="py-lineno">189</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div></div><a name="L190"></a><tt class="py-lineno">190</tt>  <tt class="py-line"> </tt>
+<a name="L191"></a><tt class="py-lineno">191</tt>  <tt class="py-line"> </tt>
+<a name="QuantileEstimatorInt64"></a><div id="QuantileEstimatorInt64-def"><a name="L192"></a><tt class="py-lineno">192</tt> <a class="py-toggle" href="#" id="QuantileEstimatorInt64-toggle" onclick="return toggle('QuantileEstimatorInt64');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="szaru.QuantileEstimatorInt64-class.html">QuantileEstimatorInt64</a><tt class="py-op">:</tt> </tt>
+</div><div id="QuantileEstimatorInt64-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="QuantileEstimatorInt64-expanded"><a name="L193"></a><tt class="py-lineno">193</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L194"></a><tt class="py-lineno">194</tt>  <tt class="py-line"><tt class="py-docstring">    Approximate N-tiles for data items from an ordered domain.</tt> </tt>
+<a name="L195"></a><tt class="py-lineno">195</tt>  <tt class="py-line"><tt class="py-docstring">    QuantileEstimator of that weight is int64</tt> </tt>
+<a name="L196"></a><tt class="py-lineno">196</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="QuantileEstimatorInt64.__init__"></a><div id="QuantileEstimatorInt64.__init__-def"><a name="L197"></a><tt class="py-lineno">197</tt> <a class="py-toggle" href="#" id="QuantileEstimatorInt64.__init__-toggle" onclick="return toggle('QuantileEstimatorInt64.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.QuantileEstimatorInt64-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">quantile_elems</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="QuantileEstimatorInt64.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="QuantileEstimatorInt64.__init__-expanded"><a name="L198"></a><tt class="py-lineno">198</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L199"></a><tt class="py-lineno">199</tt>  <tt class="py-line"><tt class="py-docstring">        Create a QuantileEstimatorInt64 object.</tt> </tt>
+<a name="L200"></a><tt class="py-lineno">200</tt>  <tt class="py-line"><tt class="py-docstring">        @type  quantile_elems: number</tt> </tt>
+<a name="L201"></a><tt class="py-lineno">201</tt>  <tt class="py-line"><tt class="py-docstring">        @param quantile_elems: Number of tiles to be estimate</tt> </tt>
+<a name="L202"></a><tt class="py-lineno">202</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L203"></a><tt class="py-lineno">203</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L204"></a><tt class="py-lineno">204</tt>  <tt class="py-line"> </tt>
+<a name="L205"></a><tt class="py-lineno">205</tt>  <tt class="py-line"> </tt>
+<a name="QuantileEstimatorInt64.add_elem"></a><div id="QuantileEstimatorInt64.add_elem-def"><a name="L206"></a><tt class="py-lineno">206</tt> <a class="py-toggle" href="#" id="QuantileEstimatorInt64.add_elem-toggle" onclick="return toggle('QuantileEstimatorInt64.add_elem');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.QuantileEstimatorInt64-class.html#add_elem">add_elem</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">elem</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="QuantileEstimatorInt64.add_elem-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="QuantileEstimatorInt64.add_elem-expanded"><a name="L207"></a><tt class="py-lineno">207</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L208"></a><tt class="py-lineno">208</tt>  <tt class="py-line"><tt class="py-docstring">        Add a new element to this entry.</tt> </tt>
+<a name="L209"></a><tt class="py-lineno">209</tt>  <tt class="py-line"><tt class="py-docstring">        @type  elem: number</tt> </tt>
+<a name="L210"></a><tt class="py-lineno">210</tt>  <tt class="py-line"><tt class="py-docstring">        @param elem: The element to be add</tt> </tt>
+<a name="L211"></a><tt class="py-lineno">211</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L212"></a><tt class="py-lineno">212</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L213"></a><tt class="py-lineno">213</tt>  <tt class="py-line"> </tt>
+<a name="QuantileEstimatorInt64.estimate"></a><div id="QuantileEstimatorInt64.estimate-def"><a name="L214"></a><tt class="py-lineno">214</tt> <a class="py-toggle" href="#" id="QuantileEstimatorInt64.estimate-toggle" onclick="return toggle('QuantileEstimatorInt64.estimate');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.QuantileEstimatorInt64-class.html#estimate">estimate</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="QuantileEstimatorInt64.estimate-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="QuantileEstimatorInt64.estimate-expanded"><a name="L215"></a><tt class="py-lineno">215</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L216"></a><tt class="py-lineno">216</tt>  <tt class="py-line"><tt class="py-docstring">        Return a estimated N tiles.</tt> </tt>
+<a name="L217"></a><tt class="py-lineno">217</tt>  <tt class="py-line"><tt class="py-docstring">        Example: [0, 3, 7, 9]</tt> </tt>
+<a name="L218"></a><tt class="py-lineno">218</tt>  <tt class="py-line"><tt class="py-docstring">        @rtype: list</tt> </tt>
+<a name="L219"></a><tt class="py-lineno">219</tt>  <tt class="py-line"><tt class="py-docstring">        @return: n-tiles</tt> </tt>
+<a name="L220"></a><tt class="py-lineno">220</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L221"></a><tt class="py-lineno">221</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div></div><a name="L222"></a><tt class="py-lineno">222</tt>  <tt class="py-line"> </tt>
+<a name="L223"></a><tt class="py-lineno">223</tt>  <tt class="py-line"> </tt>
+<a name="QuantileEstimatorDouble"></a><div id="QuantileEstimatorDouble-def"><a name="L224"></a><tt class="py-lineno">224</tt> <a class="py-toggle" href="#" id="QuantileEstimatorDouble-toggle" onclick="return toggle('QuantileEstimatorDouble');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="szaru.QuantileEstimatorDouble-class.html">QuantileEstimatorDouble</a><tt class="py-op">:</tt> </tt>
+</div><div id="QuantileEstimatorDouble-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="QuantileEstimatorDouble-expanded"><a name="L225"></a><tt class="py-lineno">225</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L226"></a><tt class="py-lineno">226</tt>  <tt class="py-line"><tt class="py-docstring">    Approximate N-tiles for data items from an ordered domain.</tt> </tt>
+<a name="L227"></a><tt class="py-lineno">227</tt>  <tt class="py-line"><tt class="py-docstring">    QuantileEstimator of that weight is double</tt> </tt>
+<a name="L228"></a><tt class="py-lineno">228</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="QuantileEstimatorDouble.__init__"></a><div id="QuantileEstimatorDouble.__init__-def"><a name="L229"></a><tt class="py-lineno">229</tt> <a class="py-toggle" href="#" id="QuantileEstimatorDouble.__init__-toggle" onclick="return toggle('QuantileEstimatorDouble.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.QuantileEstimatorDouble-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">quantile_elems</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="QuantileEstimatorDouble.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="QuantileEstimatorDouble.__init__-expanded"><a name="L230"></a><tt class="py-lineno">230</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L231"></a><tt class="py-lineno">231</tt>  <tt class="py-line"><tt class="py-docstring">        Create a QuantileEstimatorDouble object.</tt> </tt>
+<a name="L232"></a><tt class="py-lineno">232</tt>  <tt class="py-line"><tt class="py-docstring">        @type  quantile_elems: number</tt> </tt>
+<a name="L233"></a><tt class="py-lineno">233</tt>  <tt class="py-line"><tt class="py-docstring">        @param quantile_elems: Number of tiles to be estimate</tt> </tt>
+<a name="L234"></a><tt class="py-lineno">234</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L235"></a><tt class="py-lineno">235</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L236"></a><tt class="py-lineno">236</tt>  <tt class="py-line"> </tt>
+<a name="L237"></a><tt class="py-lineno">237</tt>  <tt class="py-line"> </tt>
+<a name="QuantileEstimatorDouble.add_elem"></a><div id="QuantileEstimatorDouble.add_elem-def"><a name="L238"></a><tt class="py-lineno">238</tt> <a class="py-toggle" href="#" id="QuantileEstimatorDouble.add_elem-toggle" onclick="return toggle('QuantileEstimatorDouble.add_elem');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.QuantileEstimatorDouble-class.html#add_elem">add_elem</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">elem</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="QuantileEstimatorDouble.add_elem-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="QuantileEstimatorDouble.add_elem-expanded"><a name="L239"></a><tt class="py-lineno">239</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L240"></a><tt class="py-lineno">240</tt>  <tt class="py-line"><tt class="py-docstring">        Add a new element to this entry.</tt> </tt>
+<a name="L241"></a><tt class="py-lineno">241</tt>  <tt class="py-line"><tt class="py-docstring">        @type  elem: float</tt> </tt>
+<a name="L242"></a><tt class="py-lineno">242</tt>  <tt class="py-line"><tt class="py-docstring">        @param elem: The element to be add</tt> </tt>
+<a name="L243"></a><tt class="py-lineno">243</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L244"></a><tt class="py-lineno">244</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L245"></a><tt class="py-lineno">245</tt>  <tt class="py-line"> </tt>
+<a name="QuantileEstimatorDouble.estimate"></a><div id="QuantileEstimatorDouble.estimate-def"><a name="L246"></a><tt class="py-lineno">246</tt> <a class="py-toggle" href="#" id="QuantileEstimatorDouble.estimate-toggle" onclick="return toggle('QuantileEstimatorDouble.estimate');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="szaru.QuantileEstimatorDouble-class.html#estimate">estimate</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="QuantileEstimatorDouble.estimate-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="QuantileEstimatorDouble.estimate-expanded"><a name="L247"></a><tt class="py-lineno">247</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L248"></a><tt class="py-lineno">248</tt>  <tt class="py-line"><tt class="py-docstring">        Return a estimated N tiles.</tt> </tt>
+<a name="L249"></a><tt class="py-lineno">249</tt>  <tt class="py-line"><tt class="py-docstring">        Example: [0.0, 3.0, 7.0, 9.0]</tt> </tt>
+<a name="L250"></a><tt class="py-lineno">250</tt>  <tt class="py-line"><tt class="py-docstring">        @rtype: list</tt> </tt>
+<a name="L251"></a><tt class="py-lineno">251</tt>  <tt class="py-line"><tt class="py-docstring">        @return: n-tiles</tt> </tt>
+<a name="L252"></a><tt class="py-lineno">252</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L253"></a><tt class="py-lineno">253</tt>  <tt class="py-line">        <tt class="py-keyword">pass</tt> </tt>
+</div></div><a name="L254"></a><tt class="py-lineno">254</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sat Nov 13 21:33:55 2010
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
