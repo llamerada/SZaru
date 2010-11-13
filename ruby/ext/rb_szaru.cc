@@ -58,7 +58,7 @@ private:
   AddElem(VALUE self, VALUE elem)
   {
     SZaru::QuantileEstimator<Value> **qe;
-    Check_Type(elem, T_FIXNUM);
+    Converter<Value>::CheckType(elem);
     Data_Get_Struct(self, SZaru::QuantileEstimator<Value>*, qe);
     (*qe)->AddElem(Converter<Value>::FromRuby(elem));
     return Qnil;
@@ -70,7 +70,7 @@ private:
     SZaru::QuantileEstimator<Value> **qe;
     Data_Get_Struct(self, SZaru::QuantileEstimator<Value>*, qe);
     std::vector<Value> quantiles;
-    (*qe)->Estimaqe(quantiles);
+    (*qe)->Estimate(quantiles);
     VALUE ary = rb_ary_new2(quantiles.size());
     for (int i = 0; i < quantiles.size(); i++) {
       rb_ary_push(ary, Converter<Value>::ToRuby(quantiles[i]));
